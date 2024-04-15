@@ -1,12 +1,12 @@
 import './App.css';
-import Login from './Login';
+import Register from './register';
 
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-          <Login /> {/* Renderiza el componente de inicio de sesión */}
+          <Register /> {/* Renderiza el componente de inicio de sesión */}
 
       </header>
     </div>
