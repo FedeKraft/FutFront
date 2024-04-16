@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 function Login() {
-    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     const handleSubmit = async (e) => {
@@ -12,16 +12,18 @@ function Login() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ name, password }),
+                body: JSON.stringify({ email, password }),
             });
             if (response.ok) {
                 console.log('Inicio de sesión exitoso');
-                history.push('/inicio');
+                setEmail('');
+                setPassword('');
             } else {
                 console.error('Credenciales inválidas');
             }
         } catch (error) {
             console.error('Error de red', error);
+            throw new error(404);
         }
     };
 
@@ -30,11 +32,11 @@ function Login() {
             <h2>Iniciar sesión</h2>
             <form onSubmit={handleSubmit}>
                 <div>
-                    <label>Usuario/Nombre del Equipo</label>
+                    <label>Email</label>
                     <input
-                        type="name"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                         required
                     />
                 </div>
