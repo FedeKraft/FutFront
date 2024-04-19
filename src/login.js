@@ -16,6 +16,8 @@ function Login() {
             });
             if (response.ok) {
                 console.log('Inicio de sesión exitoso');
+                const res = await response.json();
+                localStorage.setItem('token', res.token);
                 setEmail('');
                 setPassword('');
             } else {
