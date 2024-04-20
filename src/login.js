@@ -22,6 +22,8 @@ function Login() {
                 setPassword('');
             } else {
                 console.error('Credenciales inválidas');
+                setEmail('');
+                setPassword('');
             }
         } catch (error) {
             console.error('Error de red', error);
