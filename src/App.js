@@ -3,6 +3,7 @@ import Register from './register';
 import Login from './login';
 import HomePage from './home';
 import Profile from './profile';
+import Notifications from './notifications';
 import {BrowserRouter, Navigate, Outlet, Route, Routes} from "react-router-dom";
 import {jwtDecode} from "jwt-decode";
 
@@ -29,6 +30,7 @@ function App() {
                         <Route element={<Auth/>} >
                             <Route path={"/home"} element={<HomePage/>}/>
                             <Route path={"/profile"} element={<Profile/>}/>
+                            <Route path={"/notifications"} element={<Notifications/>}/>
                         </Route>
                     </Routes>
                 </BrowserRouter>
