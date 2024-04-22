@@ -7,9 +7,10 @@ function Profile() {
         city: '',
         playerAmount: '',
         number: ''
-    });    const [isEditing, setIsEditing] = useState(false);
-
+    });
+    const [isEditing, setIsEditing] = useState(false);
     const token = localStorage.getItem('token');
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -33,7 +34,7 @@ function Profile() {
     }, [token]);
 
     const handleSave = () => {
-        fetch(`http://localhost:8080/auth/profile`, {
+        fetch(`http://localhost:8080/user/profile`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -41,20 +42,12 @@ function Profile() {
             },
             body: JSON.stringify(profile)
         })
-            .then(() => {
-                // After successfully updating the profile, fetch the latest profile data
-                fetch(`http://localhost:8080/auth/profile`, {
-                    headers: {
-                        'Authorization': 'Bearer ' + token
-                    },
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        // Update the profile state with the latest data
-                        setProfile(data);
-                        setIsEditing(false);
-                    })
-                    .catch(error => console.error('Error:', error));
+            .then(response => {
+                if (response.ok) {
+                    setIsEditing(false);
+                } else {
+                    console.error('Error al actualizar el perfil');
+                }
             })
             .catch(error => console.error('Error:', error));
     };
@@ -62,6 +55,7 @@ function Profile() {
     const handleEdit = () => {
         setIsEditing(true);
     };
+
     const handleChange = (event) => {
         setProfile({...profile, [event.target.name]: event.target.value});
     };

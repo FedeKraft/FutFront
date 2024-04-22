@@ -5,9 +5,9 @@ function Register() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [localidad, setLocalidad] = useState('');
+    const [city, setCity] = useState('');
     const [playerAmount, setPlayerAmount] = useState('');
-    const [numero, setNumero] = useState('');
+    const [number, setNumber] = useState('');
 
 
     // Maneja el envío del formulario de inicio de sesión
@@ -19,7 +19,7 @@ function Register() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ name, email, password, localidad, playerAmount, numero }),
+                body: JSON.stringify({ name, email, password, city, playerAmount, number}),
             });
             if (response.ok) {
                 // Manejar la respuesta exitosa (por ejemplo, redirigir al usuario a una página de inicio)
@@ -28,9 +28,9 @@ function Register() {
                 setName('')
                 setEmail('');
                 setPassword('');
-                setLocalidad('')
+                setCity('')
                 setPlayerAmount('')
-                setNumero('')
+                setNumber('')
             } else {
                 console.error('Error al Registrarse');
             }
@@ -76,8 +76,8 @@ function Register() {
                     <input
                         type="number"
                         placeholder={"(+54)"}
-                        value={numero}
-                        onChange={(e) => setNumero(e.target.value)}
+                        value={number}
+                        onChange={(e) => setNumber(e.target.value)}
                         required
                     />
                 </div>
@@ -85,8 +85,8 @@ function Register() {
                     <label>Localidad:</label>
                     <select
                         className="dropdown"
-                        value={localidad}
-                        onChange={(e) => setLocalidad(e.target.value)}
+                        value={city}
+                        onChange={(e) => setCity(e.target.value)}
                         required
                     >
                         <option value="">Selecciona una opción</option>
