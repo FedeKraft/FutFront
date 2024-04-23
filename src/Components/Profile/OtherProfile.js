@@ -80,7 +80,7 @@ function OtherProfile() {
             <p>Ciudad: {profile.city}</p>
             <p>Cantidad de jugadores: {profile.playerAmount}</p>
             <p>Número: {profile.number}</p>
-            <button onClick={handleMatch}>Iniciar Match</button>
+            <button onClick={handleMatch}>Solicitar Match</button>
             <button onClick={() => navigate('/home')}>Volver al inicio</button>
         </div>
     );
