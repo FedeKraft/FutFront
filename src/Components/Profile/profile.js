@@ -29,6 +29,7 @@ function Profile() {
             if (response.ok) {
                 const data = await response.json();
                 setProfile(data);
+                localStorage.setItem('profile', JSON.stringify(data));
             } else {
                 console.error('Error al obtener el perfil');
             }
@@ -43,15 +44,15 @@ return (
     <div>
         <h1>Perfil</h1>
         <div>
-            <p>Nombre: {profile.name}</p>
-            <p>Email: {profile.email}</p>
-            <p>Ciudad: {profile.city}</p>
+            <p>Nombre de equipo: {profile.name}</p>
+            <p>Correo electrónico: {profile.email}</p>
+            <p>Localidad: {profile.city}</p>
             <p>Cantidad de jugadores: {profile.playerAmount}</p>
-            <p>Número: {profile.number}</p>
-            <button onClick={() => navigate('/home')}>Editar</button>
+            <p>Número de teléfono: {profile.number}</p>
+            <button onClick={() => navigate('/EditProfile')}>editar</button>
         </div>
         <button onClick={handleLogout}>Cerrar sesión</button>
-        <button onClick={() => navigate('/home')}>Home</button>
+        <button onClick={() => navigate('/home')}>Volver al inicio</button>
     </div>
 );
 }
