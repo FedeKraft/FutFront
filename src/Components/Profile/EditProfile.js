@@ -1,96 +1,82 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-function Register() {
-    // Define los estados para almacenar el correo electrónico y la contraseña
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [city, setCity] = useState('');
-    const [playerAmount, setPlayerAmount] = useState('');
-    const [number, setNumber] = useState('');
+
+async function updateProfile(profile) {
+    const token = localStorage.getItem('token');
+    const response = await fetch('http://localhost:8080/auth/EditProfile', {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+        },
+        body: JSON.stringify(profile)
+    });
+
+    if (!response.ok) {
+        throw new Error('Error al actualizar el perfil');
+    }
+
+    const data = await response.json();
+    return data;
+}
+
+function EditProfile() {
+    const [profile, setProfile] = useState({
+        name: '',
+        email: '',
+        city: '',
+        playerAmount: '',
+        number: ''
+    });
     const navigate = useNavigate();
 
+    useEffect(() => {
+        const storedProfile = localStorage.getItem('profile');
+        if (storedProfile) {
+            setProfile(JSON.parse(storedProfile));
+        }
+    }, []);
 
-    // Maneja el envío del formulario de inicio de sesión
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    const handleChange = (event) => {
+        setProfile({
+            ...profile,
+            [event.target.name]: event.target.value
+        });
+    };
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
         try {
-            const response = await fetch('http://localhost:8080/auth/register', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ name, email, password, city, playerAmount, number}),
-            });
-            if (response.ok) {
-                // Manejar la respuesta exitosa (por ejemplo, redirigir al usuario a una página de inicio)
-                console.log('Usuario autenticado con éxito');
-                // Limpia los campos de correo electrónico y contraseña
-                setName('')
-                setEmail('');
-                setPassword('');
-                setCity('')
-                setPlayerAmount('')
-                setNumber('')
-                navigate('/login');
-            } else {
-                console.error('Error al Registrarse');
-            }
+            const updatedProfile = await updateProfile(profile);
+            setProfile(updatedProfile);
+            localStorage.setItem('profile', JSON.stringify(updatedProfile));
+            navigate('/profile');
         } catch (error) {
-            console.error('Error de red', error);
+            console.error('Error al actualizar el perfil', error);
         }
     };
 
     return (
         <div>
-            <h2>Registro de usuario:</h2>
+            <h1>Editar Perfil</h1>
             <form onSubmit={handleSubmit}>
                 <div>
-                    <label>Nombre de Equipo:</label>
-                    <input
-                        type="text"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        required
-                    />
+                <label>
+                    Nombre de equipo:
+                    <input type="text" name="name" value={profile.name} onChange={handleChange} required/>
+                </label>
                 </div>
                 <div>
-                    <label>Correo electrónico:</label>
-                    <input
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
-
-                    />
-                </div>
-                <div>
-                    <label>Contraseña:</label>
-                    <input
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                    />
-                </div>
-                <div>
-                    <label>Número de teléfono:</label>
-                    <input
-                        type="number"
-                        placeholder={"(+54)"}
-                        value={number}
-                        onChange={(e) => setNumber(e.target.value)}
-                        required
-                    />
+                <label>
+                    Correo electrónico:
+                    <input type="email" name="email" value={profile.email} onChange={handleChange} required/>
+                </label>
                 </div>
                 <div>
                     <label>Localidad:</label>
                     <select
-                        className="dropdown"
-                        value={city}
-                        onChange={(e) => setCity(e.target.value)}
-                        required
+                        className="dropdown" name="city" value={profile.city} onChange={handleChange} required
                     >
                         <option value="">Selecciona una opción</option>
                         <option value="Almirante Brown">Almirante Brown</option>
@@ -137,15 +123,12 @@ function Register() {
                         <option value="Tres de Febrero">Tres de Febrero</option>
                         <option value="Vicente López">Vicente López</option>
                         <option value="Zárate">Zárate</option>
-
                     </select>
                 </div>
                 <div>
                     <label>Cantidad de jugadores:</label>
                     <select
-                        className="dropdown"
-                        value={playerAmount}
-                        onChange={(e) => setPlayerAmount(e.target.value)}
+                        className="dropdown" name="playerAmount" value={profile.playerAmount} onChange={handleChange}
                         required
                     >
                         <option value="">Selecciona una opción</option>
@@ -155,12 +138,14 @@ function Register() {
                         <option value="11">11</option>
                     </select>
                 </div>
-                <button type="submit">Registrarse</button>
+                <label>
+                    Número de teléfono:
+                    <input type="text" name="number" value={profile.number} onChange={handleChange} required/>
+                </label>
+                <button type="submit">Guardar</button>
             </form>
-            <button onClick={() => navigate('/login')}>Volver</button>
         </div>
-    )
-        ;
+    );
 }
 
-export default Register;
+export default EditProfile;
