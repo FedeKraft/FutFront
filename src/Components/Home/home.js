@@ -7,6 +7,7 @@ async function getTeams() {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
+    match
             'Authorization': 'Bearer ' + token
         },
     });
