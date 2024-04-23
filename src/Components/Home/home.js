@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 async function getTeams() {
-    const token = localStorage.getItem('token'); // replace this with how you store your token
+    const token = localStorage.getItem('token');
     const response = await fetch('http://localhost:8080/auth/users', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + token},
+            'Authorization': 'Bearer ' + token
+        },
     });
     if (response.ok) {
         const teams = await response.json();
@@ -35,7 +36,7 @@ function HomePage() {
                     <h2>{team.name}</h2>
                     <p>{team.city}</p>
                     <p>{team.playerAmount}</p>
-                    {/* Agrega aquí más detalles del equipo según sea necesario */}
+                    <button onClick={() => navigate(`/profile/${team.id}`)}>Ver Perfil</button>
                 </div>
             ))}
             <button onClick={() => navigate('/profile')}>Ver perfil</button>
