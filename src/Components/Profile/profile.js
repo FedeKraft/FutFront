@@ -20,40 +20,40 @@ function Profile() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(`http://localhost:8080/auth/profile`, {
-                    headers: {
-                        'Content-Type': 'application/json',
+                const response = await fetch('http://localhost:8080/auth/profile', {
+                headers: {
+                    'Content-Type': 'application/json',
                         'Authorization': 'Bearer ' + token
-                    },
-                });
-                if (response.ok) {
-                    const data = await response.json();
-                    setProfile(data);
-                } else {
-                    console.error('Error al obtener el perfil');
-                }
-            } catch (error) {
-                console.error('Error de red', error);
+                },
+            });
+            if (response.ok) {
+                const data = await response.json();
+                setProfile(data);
+            } else {
+                console.error('Error al obtener el perfil');
             }
-        };
-        fetchData();
-    }, [token]);
+        } catch (error) {
+            console.error('Error de red', error);
+        }
+    };
+    fetchData();
+}, [token]);
 
-    return (
+return (
+    <div>
+        <h1>Perfil</h1>
         <div>
-            <h1>Perfil</h1>
-                <div>
-                    <p>Nombre: {profile.name}</p>
-                    <p>Email: {profile.email}</p>
-                    <p>Ciudad: {profile.city}</p>
-                    <p>Cantidad de jugadores: {profile.playerAmount}</p>
-                    <p>Número: {profile.number}</p>
-                    <button onClick={() => navigate('/home')}>Editar</button>
-                </div>
-            <button onClick={handleLogout}>Cerrar sesión</button>
-            <button onClick={() => navigate('/home')}>Home</button>
+            <p>Nombre: {profile.name}</p>
+            <p>Email: {profile.email}</p>
+            <p>Ciudad: {profile.city}</p>
+            <p>Cantidad de jugadores: {profile.playerAmount}</p>
+            <p>Número: {profile.number}</p>
+            <button onClick={() => navigate('/home')}>Editar</button>
         </div>
-    );
+        <button onClick={handleLogout}>Cerrar sesión</button>
+        <button onClick={() => navigate('/home')}>Home</button>
+    </div>
+);
 }
 
 export default Profile;
