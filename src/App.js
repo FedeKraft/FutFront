@@ -1,9 +1,9 @@
 import './App.css';
-import Register from './register';
-import Login from './login';
-import HomePage from './home';
-import Profile from './profile';
-import Notifications from './notifications';
+import Register from './Components/Register/register';
+import Login from './Components/Login/login';
+import HomePage from './Components/Home/home';
+import Profile from './Components/Profile/profile';
+import Notifications from './Components/Notifications/notifications';
 import {BrowserRouter, Navigate, Outlet, Route, Routes} from "react-router-dom";
 import {jwtDecode} from "jwt-decode";
 
@@ -25,6 +25,7 @@ function App() {
             <header className="App-header">
                 <BrowserRouter>
                     <Routes>
+                        <Route path="/" element={<Navigate to="/login" />} /> {/* Redirige la ruta por defecto a /login */}
                         <Route path="/login" element={<Login/>}/>
                         <Route path="/register" element={<Register/>}/>
                         <Route element={<Auth/>} >

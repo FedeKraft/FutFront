@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function Profile() {
     const [profile, setProfile] = useState({
@@ -10,6 +11,12 @@ function Profile() {
     });
     const [isEditing, setIsEditing] = useState(false);
     const token = localStorage.getItem('token');
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        localStorage.removeItem('token'); // Borra el token del almacenamiento local
+        navigate('/login'); // Redirige al usuario a la página de inicio de sesión
+    };
 
     useEffect(() => {
         const fetchData = async () => {
@@ -97,6 +104,8 @@ function Profile() {
                     <button onClick={handleEdit}>Editar perfil</button>
                 </div>
             )}
+            <button onClick={handleLogout}>Cerrar sesión</button>
+            <button onClick={() => navigate('/home')}>Volver a inicio</button>
         </div>
     );
 }

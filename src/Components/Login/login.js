@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -20,6 +22,7 @@ function Login() {
                 localStorage.setItem('token', res.token);
                 setEmail('');
                 setPassword('');
+                navigate('/home');
             } else {
                 console.error('Credenciales inválidas');
                 setEmail('');
@@ -55,6 +58,7 @@ function Login() {
                 </div>
                 <button type="submit">Iniciar sesión</button>
             </form>
+            <button onClick={() => navigate('/register')}>Registrarse</button>
         </div>
     );
 }

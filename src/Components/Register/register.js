@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function Register() {
     // Define los estados para almacenar el correo electrónico y la contraseña
@@ -8,6 +9,7 @@ function Register() {
     const [city, setCity] = useState('');
     const [playerAmount, setPlayerAmount] = useState('');
     const [number, setNumber] = useState('');
+    const navigate = useNavigate();
 
 
     // Maneja el envío del formulario de inicio de sesión
@@ -31,6 +33,7 @@ function Register() {
                 setCity('')
                 setPlayerAmount('')
                 setNumber('')
+                navigate('/login');
             } else {
                 console.error('Error al Registrarse');
             }
@@ -153,6 +156,7 @@ function Register() {
                 </div>
                 <button type="submit">Registrarse</button>
             </form>
+            <button onClick={() => navigate('/login')}>Volver</button>
         </div>
     )
         ;
