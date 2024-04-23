@@ -25,7 +25,7 @@ function App() {
             <header className="App-header">
                 <BrowserRouter>
                     <Routes>
-                        <Route path="/" element={<Navigate to="/login" />} /> {/* Redirige la ruta por defecto a /login */}
+                        <Route path="/" element={<Navigate to="/home" />} />
                         <Route path="/login" element={<Login/>}/>
                         <Route path="/register" element={<Register/>}/>
                         <Route element={<Auth/>} >
