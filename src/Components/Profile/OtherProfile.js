@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 
 function OtherProfile() {
     const {id} = useParams();
+    const navigate = useNavigate();
     const [profile, setProfile] = useState(null);
     const [notifications, setNotifications] = useState([]);
 
@@ -80,6 +81,7 @@ function OtherProfile() {
             <p>Cantidad de jugadores: {profile.playerAmount}</p>
             <p>Número: {profile.number}</p>
             <button onClick={handleMatch}>Iniciar Match</button>
+            <button onClick={() => navigate('/home')}>Volver al inicio</button>
         </div>
     );
 }

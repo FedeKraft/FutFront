@@ -62,16 +62,16 @@ function EditProfile() {
             <h1>Editar Perfil</h1>
             <form onSubmit={handleSubmit}>
                 <div>
-                <label>
-                    Nombre de equipo:
-                    <input type="text" name="name" value={profile.name} onChange={handleChange} required/>
-                </label>
+                    <label>
+                        Nombre de equipo:
+                        <input type="text" name="name" value={profile.name} onChange={handleChange} required/>
+                    </label>
                 </div>
                 <div>
-                <label>
-                    Correo electrónico:
-                    <input type="email" name="email" value={profile.email} onChange={handleChange} required/>
-                </label>
+                    <label>
+                        Correo electrónico:
+                        <input type="email" name="email" value={profile.email} onChange={handleChange} required/>
+                    </label>
                 </div>
                 <div>
                     <label>Localidad:</label>
@@ -143,6 +143,7 @@ function EditProfile() {
                     <input type="text" name="number" value={profile.number} onChange={handleChange} required/>
                 </label>
                 <button type="submit">Guardar</button>
+                <button type="button" onClick={() => navigate('/profile')}>Cancelar</button>
             </form>
         </div>
     );
