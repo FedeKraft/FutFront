@@ -51,6 +51,7 @@ function OtherProfile() {
     const handleMatch = async () => {
         const token = localStorage.getItem('token');
         const currentUserId = jwtDecode(token).id;
+
         const response = await fetch(`http://localhost:8080/auth/match`, {
             method: 'POST',
             headers: {
@@ -63,9 +64,9 @@ function OtherProfile() {
             })
         });
         if (response.ok) {
-            alert('Match iniciado');
+            alert('Match solicitado');
         } else {
-            console.error('Error al iniciar el match');
+            alert('Ya has solicitado un match con este usuario y está pendiente de respuesta.');
         }
     };
 

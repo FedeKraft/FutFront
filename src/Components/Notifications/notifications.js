@@ -31,6 +31,7 @@ async function acceptNotification(matchId, setNotifications, notifications) {
         })
     });
     if (response.ok) {
+        alert('Match aceptado');
         // Encuentra el índice de la notificación que se está aceptando
         const index = notifications.findIndex(notification => notification.match.id === matchId);
         if (index !== -1) {
@@ -46,34 +47,32 @@ async function acceptNotification(matchId, setNotifications, notifications) {
     }
 }
 
-async function rejectNotification(notificationId) {
+async function rejectNotification(matchId, setNotifications, notifications) {
     const token = localStorage.getItem('token');
-    const response = await fetch(`http://localhost:8080/api/matches/${notificationId}/reject`, {
+    const response = await fetch(`http://localhost:8080/api/matches/reject`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + token
         },
+        body: JSON.stringify({
+            matchId: matchId
+        })
     });
     if (response.ok) {
-        const match = await response.json();
-        const message = `La solicitud ha sido rechazada.`;
-        const notificationResponse = await fetch('http://localhost:8080/api/notifications', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + token
-            },
-            body: JSON.stringify({
-                userId: match.userId,
-                message: message
-            })
-        });
-        if (!notificationResponse.ok) {
-            console.error('Error al enviar la notificación');
+        alert('Match rechazado')
+        // Encuentra el índice de la notificación que se está aceptando
+        const index = notifications.findIndex(notification => notification.match.id === matchId);
+        if (index !== -1) {
+            // Crea una copia de las notificaciones
+            const newNotifications = [...notifications];
+            // Elimina la notificación de la copia
+            newNotifications.splice(index, 1);
+            // Establece el estado de las notificaciones a la copia modificada
+            setNotifications(newNotifications);
         }
     } else {
-        console.error('Error al rechazar la notificación');
+        console.error('Error al aceptar el match');
     }
 }
 
@@ -90,14 +89,17 @@ function Notifications() {
     return (
         <div>
             <h1>Notificaciones</h1>
-            {notifications.map((notification) => {
+            {notifications.map(notification => {
+                if (notification.match.status !== 'PENDING' && notification.message.includes('iniciado')) {
+                    return null;
+                }
                 return (
                     <div key={notification.id} className="notification-card">
                         {notification.match.status === 'PENDING' ? (
                             <>
                                 <p>{notification.message}</p>
                                 <button onClick={() => acceptNotification(notification.match.id, setNotifications, notifications)}>Aceptar</button>
-                                <button onClick={() => rejectNotification(notification.id)}>Rechazar</button>
+                                <button onClick={() => rejectNotification(notification.match.id, setNotifications, notifications)}>Rechazar</button>
                             </>
                         ) : (
                             <p>{notification.message}</p>
