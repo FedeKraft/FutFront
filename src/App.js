@@ -6,6 +6,7 @@ import Profile from './Components/Profile/profile';
 import Notifications from './Components/Notifications/notifications';
 import OtherProfile from './Components/Profile/OtherProfile';
 import EditProfile from "./Components/Profile/EditProfile";
+import Form from "./Components/Form/form";
 import {BrowserRouter, Navigate, Outlet, Route, Routes} from "react-router-dom";
 import {jwtDecode} from "jwt-decode";
 
@@ -36,6 +37,7 @@ function App() {
                             <Route path={"/notifications"} element={<Notifications/>}/>
                             <Route path="/profile/:id" element={<OtherProfile/>}/>
                             <Route path={"/EditProfile"} element={<EditProfile/>}/>
+                            <Route path={"/form"} element={<Form/>}/>
                         </Route>
                     </Routes>
                 </BrowserRouter>

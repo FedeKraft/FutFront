@@ -76,6 +76,19 @@ async function rejectNotification(matchId, setNotifications, notifications) {
     }
 }
 
+async function matchCanceled(notificationId, setNotifications, notifications) {
+    // Encuentra el índice de la notificación que se está cancelando
+    const index = notifications.findIndex(notification => notification.id === notificationId);
+    if (index !== -1) {
+        // Crea una copia de las notificaciones
+        const newNotifications = [...notifications];
+        // Elimina la notificación de la copia
+        newNotifications.splice(index, 1);
+        // Establece el estado de las notificaciones a la copia modificada
+        setNotifications(newNotifications);
+    }
+}
+
 function Notifications() {
     const navigate = useNavigate();
     const [notifications, setNotifications] = useState([]);
@@ -92,6 +105,15 @@ function Notifications() {
             {notifications.map(notification => {
                 if (notification.match.status !== 'PENDING' && notification.message.includes('iniciado')) {
                     return null;
+                }
+                if (notification.match.status !== 'PENDING' && notification.message.includes('Informar')) {
+                    return (
+                        <div key={notification.id} className="notification-card">
+                            <p>{notification.message}</p>
+                            <button onClick={() => navigate('/form')}>Informar resultado</button>
+                            <button onClick={() => matchCanceled(notification.id, setNotifications, notifications)}>Partido cancelado</button>
+                        </div>
+                    )
                 }
                 return (
                     <div key={notification.id} className="notification-card">
