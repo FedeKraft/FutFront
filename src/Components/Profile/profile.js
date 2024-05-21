@@ -43,10 +43,6 @@ function Profile() {
     };
 
     useEffect(() => {
-        const storedProfile = JSON.parse(localStorage.getItem('profile'));
-        if (storedProfile) {
-            setProfile(storedProfile);
-        } else {
             const fetchData = async () => {
                 try {
                     const response = await fetch('http://localhost:8080/auth/profile', {
@@ -67,7 +63,6 @@ function Profile() {
                 }
             };
             fetchData();
-        }
     }, [token]);
 
 

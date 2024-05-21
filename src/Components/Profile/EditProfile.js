@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, {useEffect, useState} from 'react';
+import {useNavigate} from 'react-router-dom';
 
 
 async function updateProfile(profile) {
@@ -17,8 +17,7 @@ async function updateProfile(profile) {
         throw new Error('Error al actualizar el perfil');
     }
 
-    const data = await response.json();
-    return data;
+    return await response.json();
 }
 
 function EditProfile() {

@@ -18,7 +18,7 @@ async function getNotifications() {
     }
 }
 
-async function acceptNotification(matchId, setNotifications, notifications) {
+async function acceptNotification(notification, setNotifications, notifications) {
     const token = localStorage.getItem('token');
     const response = await fetch(`http://localhost:8080/api/matches/accept`, {
         method: 'POST',
@@ -27,27 +27,20 @@ async function acceptNotification(matchId, setNotifications, notifications) {
             'Authorization': 'Bearer ' + token
         },
         body: JSON.stringify({
-            matchId: matchId
+            matchId: notification.match.id
         })
     });
     if (response.ok) {
         alert('Match aceptado');
-        // Encuentra el índice de la notificación que se está aceptando
-        const index = notifications.findIndex(notification => notification.match.id === matchId);
-        if (index !== -1) {
-            // Crea una copia de las notificaciones
-            const newNotifications = [...notifications];
-            // Elimina la notificación de la copia
-            newNotifications.splice(index, 1);
-            // Establece el estado de las notificaciones a la copia modificada
-            setNotifications(newNotifications);
-        }
+        // Crea un arreglo con las notificaciones que no sean la notificación aceptada
+        const newNotifications = notifications.filter(n => n.id !== notification.id);
+        setNotifications(newNotifications);
     } else {
         console.error('Error al aceptar el match');
     }
 }
 
-async function rejectNotification(matchId, setNotifications, notifications) {
+async function rejectNotification(notification, setNotifications, notifications) {
     const token = localStorage.getItem('token');
     const response = await fetch(`http://localhost:8080/api/matches/reject`, {
         method: 'POST',
@@ -56,36 +49,41 @@ async function rejectNotification(matchId, setNotifications, notifications) {
             'Authorization': 'Bearer ' + token
         },
         body: JSON.stringify({
-            matchId: matchId
+            matchId: notification.match.id
         })
     });
     if (response.ok) {
         alert('Match rechazado')
-        // Encuentra el índice de la notificación que se está aceptando
-        const index = notifications.findIndex(notification => notification.match.id === matchId);
-        if (index !== -1) {
-            // Crea una copia de las notificaciones
-            const newNotifications = [...notifications];
-            // Elimina la notificación de la copia
-            newNotifications.splice(index, 1);
-            // Establece el estado de las notificaciones a la copia modificada
-            setNotifications(newNotifications);
-        }
+        // Crea un arreglo con las notificaciones que no sean la notificación aceptada
+        const newNotifications = notifications.filter(n => n.id !== notification.id);
+        setNotifications(newNotifications);
     } else {
         console.error('Error al aceptar el match');
     }
 }
 
-async function matchCanceled(notificationId, setNotifications, notifications) {
-    // Encuentra el índice de la notificación que se está cancelando
-    const index = notifications.findIndex(notification => notification.id === notificationId);
-    if (index !== -1) {
-        // Crea una copia de las notificaciones
-        const newNotifications = [...notifications];
-        // Elimina la notificación de la copia
-        newNotifications.splice(index, 1);
-        // Establece el estado de las notificaciones a la copia modificada
-        setNotifications(newNotifications);
+async function matchCanceled(notification, setNotifications) {
+    const token = localStorage.getItem('token');
+    const userConfirmation = window.confirm('¿Estás seguro de que quieres reportar el match como cancelado?');
+    if (userConfirmation) {
+        const response = await fetch(`http://localhost:8080/api/notifications/responded`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            },
+            body: JSON.stringify({
+                notificationId: notification.id
+            })
+        });
+        if (response.ok) {
+            // Vuelve a obtener las notificaciones
+            getNotifications().then(notifications => {
+                setNotifications(notifications);
+            });
+        } else {
+            console.error('Error al cancelar el partido');
+        }
     }
 }
 
@@ -103,35 +101,41 @@ function Notifications() {
         <div>
             <h1>Notificaciones</h1>
             {notifications.map(notification => {
-                if (notification.match.status !== 'PENDING' && notification.message.includes('iniciado')) {
-                    return null;
-                }
-                if (notification.match.status !== 'PENDING' && notification.message.includes('Informar')) {
-                    return (
+                if (notification.responded === false) {
+                    if (notification.match.status !== 'PENDING' && notification.message.includes('iniciado')) {
+                        return null;
+                    }
+                    console.log(notification.responded, notification.message, notification.match.status);
+                    if (notification.match.status !== 'PENDING' && notification.message.includes('Informar')) {
+                        return (
+                            <div key={notification.id} className="notification-card">
+                                <p>{notification.message}</p>
+                                <button onClick={async () => {
+                                    navigate('/form', {state: {notification}});
+                                }}>Informar resultado
+                                </button>
+                                <button onClick={() => matchCanceled(notification, setNotifications)}>Partido cancelado</button>
+                            </div>
+                        )
+                    }
+                    else return (
                         <div key={notification.id} className="notification-card">
-                            <p>{notification.message}</p>
-                            <button onClick={() => navigate('/form')}>Informar resultado</button>
-                            <button onClick={() => matchCanceled(notification.id, setNotifications, notifications)}>Partido cancelado</button>
+                            {notification.match.status === 'PENDING' ? (
+                                <>
+                                    <p>{notification.message}</p>
+                                    <button onClick={() => acceptNotification(notification, setNotifications, notifications)}>Aceptar</button>
+                                    <button onClick={() => rejectNotification(notification, setNotifications, notifications)}>Rechazar</button>
+                                </>
+                            ) : (
+                                <p>{notification.message}</p>
+                            )}
                         </div>
                     )
                 }
-                return (
-                    <div key={notification.id} className="notification-card">
-                        {notification.match.status === 'PENDING' ? (
-                            <>
-                                <p>{notification.message}</p>
-                                <button onClick={() => acceptNotification(notification.match.id, setNotifications, notifications)}>Aceptar</button>
-                                <button onClick={() => rejectNotification(notification.match.id, setNotifications, notifications)}>Rechazar</button>
-                            </>
-                        ) : (
-                            <p>{notification.message}</p>
-                        )}
-                    </div>
-                );
             })}
             <button onClick={() => navigate('/home')}>Volver a la página de inicio</button>
         </div>
-    );
+    )
 }
 
 export default Notifications;

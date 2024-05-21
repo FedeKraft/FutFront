@@ -6,7 +6,6 @@ function OtherProfile() {
     const {id} = useParams();
     const navigate = useNavigate();
     const [profile, setProfile] = useState(null);
-    const [notifications, setNotifications] = useState([]);
 
     useEffect(() => {
         const fetchProfile = async () => {
@@ -28,26 +27,6 @@ function OtherProfile() {
         fetchProfile();
     }, [id]);
 
-    useEffect(() => {
-        const fetchNotifications = async () => {
-            const token = localStorage.getItem('token');
-            const response = await fetch(`http://localhost:8080/api/notifications`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + token
-                },
-            });
-            if (response.ok) {
-                const notificationsData = await response.json();
-                setNotifications(notificationsData);
-            } else {
-                console.error('Error al obtener las notificaciones');
-            }
-        };
-        fetchNotifications();
-    }, []);
-
     const handleMatch = async () => {
         const token = localStorage.getItem('token');
         const currentUserId = jwtDecode(token).id;
@@ -59,8 +38,8 @@ function OtherProfile() {
                 'Authorization': 'Bearer ' + token
             },
             body: JSON.stringify({
-                user1Id: currentUserId,
-                user2Id: id
+                fromUserId: currentUserId,
+                toUserId: id
             })
         });
         if (response.ok) {
@@ -71,7 +50,7 @@ function OtherProfile() {
     };
 
     if (!profile) {
-        return <div>Cargando perfil...</div>;
+        return <div>No existe el perfil.</div>;
     }
 
     return (

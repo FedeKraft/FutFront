@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function Register() {
-    // Define los estados para almacenar el correo electrónico y la contraseña
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -11,8 +10,6 @@ function Register() {
     const [number, setNumber] = useState('');
     const navigate = useNavigate();
 
-
-    // Maneja el envío del formulario de inicio de sesión
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -24,9 +21,8 @@ function Register() {
                 body: JSON.stringify({ name, email, password, city, playerAmount, number}),
             });
             if (response.ok) {
-                // Manejar la respuesta exitosa (por ejemplo, redirigir al usuario a una página de inicio)
                 console.log('Usuario autenticado con éxito');
-                // Limpia los campos de correo electrónico y contraseña
+                // Limpia los campos y redirige a la página de inicio de sesión
                 setName('')
                 setEmail('');
                 setPassword('');
@@ -160,7 +156,6 @@ function Register() {
             <button onClick={() => navigate('/login')}>Volver</button>
         </div>
     )
-        ;
 }
 
 export default Register;
