@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, {useEffect, useState} from 'react';
+import {useNavigate} from 'react-router-dom';
 
 async function getTeams() {
     const token = localStorage.getItem('token');
@@ -11,8 +11,7 @@ async function getTeams() {
         },
     });
     if (response.ok) {
-        const teams = await response.json();
-        return teams;
+        return await response.json();
     } else {
         console.error('Error al obtener los equipos');
         return [];
@@ -41,7 +40,7 @@ function HomePage() {
             ))}
             <button onClick={() => navigate('/profile')}>Ver perfil</button>
             <button onClick={() => navigate('/notifications')}>Notificaciones</button>
-
+            <button onClick={() => navigate('/ranking')}>Ranking</button>
         </div>
     );
 }
