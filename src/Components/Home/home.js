@@ -1,5 +1,7 @@
-import React, {useState, useEffect} from 'react';
-import {useNavigate} from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import './home.css';
+import logo from '../../todo.png';
 
 async function getTeams() {
     const token = localStorage.getItem('token');
@@ -22,27 +24,45 @@ async function getTeams() {
 function HomePage() {
     const navigate = useNavigate();
     const [teams, setTeams] = useState([]);
-    const [history, setHistory] = useState([]);
+    const [menuOpen, setMenuOpen] = useState(false);
 
     useEffect(() => {
         getTeams().then(setTeams);
     }, []);
 
+    const handleMenuToggle = () => {
+        setMenuOpen(!menuOpen);
+    };
+
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        navigate('/login');
+    };
+
     return (
-        <div>
-            <h1>Bienvenido a la página de inicio</h1>
-            <p>Esta es la página de inicio de nuestra aplicación.</p>
-            {teams.map((team) => (
-                <div key={team.id} className="team-card">
-                    <h2>{team.name}</h2>
-                    <p>{team.city}</p>
-                    <p>{team.playerAmount}</p>
-                    <button onClick={() => navigate(`/profile/${team.id}`)}>Ver Perfil</button>
-                </div>
-            ))}
-            <button onClick={() => navigate('/profile')}>Ver perfil</button>
-            <button onClick={() => navigate('/notifications')}>Notificaciones</button>
-            <button onClick={() => navigate('/MatchHistory')}>Match History</button>
+        <div className="home-container">
+            <header className="home-header">
+                <img src={logo} alt="Logo" className="logo" />
+                <button className="menu-button" onClick={handleMenuToggle}>☰</button>
+            </header>
+            <div className={`menu-dropdown ${menuOpen ? 'open' : ''}`}>
+                <button onClick={() => navigate('/profile')}>Editar Perfil</button>
+                <button onClick={() => navigate('/notifications')}>Notificaciones</button>
+                <button onClick={() => navigate('/ranking')}>Ranking</button>
+                <button onClick={() => navigate('/history')}>Historial</button>
+                <button onClick={() => navigate('/incidents')}>Incidentes</button>
+                <button onClick={handleLogout}>Cerrar Sesión</button>
+            </div>
+            <div className="team-list">
+                {teams.map((team) => (
+                    <div key={team.id} className="team-card">
+                        <h2>{team.name}</h2>
+                        <p>Puntos: {team.points}</p>
+                        <p>Localidad: {team.city}</p>
+                        <button onClick={() => navigate(`/profile/${team.id}`)}>Ver Perfil</button>
+                    </div>
+                ))}
+            </div>
         </div>
     );
 }
