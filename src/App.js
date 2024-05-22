@@ -8,6 +8,7 @@ import OtherProfile from './Components/Profile/OtherProfile';
 import EditProfile from "./Components/Profile/EditProfile";
 import Form from "./Components/Form/form";
 import Ranking from "./Components/Ranking/ranking";
+import MatchHistory from "./Components/MatchHistory/MatchHistory";
 import {BrowserRouter, Navigate, Outlet, Route, Routes} from "react-router-dom";
 import {jwtDecode} from "jwt-decode";
 
@@ -40,6 +41,7 @@ function App() {
                             <Route path={"/EditProfile"} element={<EditProfile/>}/>
                             <Route path={"/form"} element={<Form/>}/>
                             <Route path="/ranking" element={<Ranking/>}/>
+                            <Route path={"/MatchHistory"} element={<MatchHistory/>}/>
                         </Route>
                     </Routes>
                 </BrowserRouter>

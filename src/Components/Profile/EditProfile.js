@@ -142,7 +142,6 @@ function EditProfile() {
                     <input type="text" name="number" value={profile.number} onChange={handleChange} required/>
                 </label>
                 <button type="submit">Guardar</button>
-                <button type="button" onClick={() => navigate('/profile')}>Cancelar</button>
             </form>
         </div>
     );

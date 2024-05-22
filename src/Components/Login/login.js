@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import './login.css';
+import logo from '../../todo.png';
 
 function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -30,35 +33,52 @@ function Login() {
             }
         } catch (error) {
             console.error('Error de red', error);
-            throw new error(404);
         }
     };
 
     return (
-        <div>
-            <h2>Iniciar sesión</h2>
+        <div className="container">
+            <div className="logo-container">
+                <img src={logo} alt="Logo" className="logo" />
+            </div>
+            <hr />
+            <h2>Log In</h2>
+            <hr />
             <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Email</label>
+                <div className="input-container">
                     <input
                         type="email"
+                        placeholder="Email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
                     />
                 </div>
-                <div>
-                    <label>Contraseña:</label>
+                <hr />
+                <div className="input-container">
+
                     <input
-                        type="password"
+                        type={showPassword ? 'text' : 'password'}
+                        placeholder="Password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required
                     />
+                    <span
+                        className="show-password"
+                        onClick={() => setShowPassword(!showPassword)}
+                    >
+                        {showPassword ? 'Hide' : 'Show'}
+                    </span>
                 </div>
-                <button type="submit">Iniciar sesión</button>
+                <hr />
+                <button type="submit">Log In</button>
+                <button onClick={() => navigate('/register')} className="register-button">Registrarse</button>
             </form>
-            <button onClick={() => navigate('/register')}>Registrarse</button>
+            <hr />
+            <div className="forgot-password">
+                <a href="/forgot-password">Forgot your password?</a>
+            </div>
         </div>
     );
 }
