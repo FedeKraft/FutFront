@@ -105,7 +105,6 @@ function Notifications() {
                     if (notification.match.status !== 'PENDING' && notification.message.includes('iniciado')) {
                         return null;
                     }
-                    console.log(notification.responded, notification.message, notification.match.status);
                     if (notification.match.status !== 'PENDING' && notification.message.includes('Informar')) {
                         return (
                             <div key={notification.id} className="notification-card">

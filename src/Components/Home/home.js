@@ -13,8 +13,7 @@ async function getTeams() {
         },
     });
     if (response.ok) {
-        const teams = await response.json();
-        return teams;
+        return await response.json();
     } else {
         console.error('Error al obtener los equipos');
         return [];
