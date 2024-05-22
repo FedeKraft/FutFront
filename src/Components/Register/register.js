@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import './register.css';
+import logo from '../../todo.png';
 
 function Register() {
     const [name, setName] = useState('');
@@ -21,17 +23,16 @@ function Register() {
                 body: JSON.stringify({ name, email, password, city, playerAmount, number}),
             });
             if (response.ok) {
-                console.log('Usuario autenticado con éxito');
-                // Limpia los campos y redirige a la página de inicio de sesión
-                setName('')
+                console.log('Usuario registrado con éxito');
+                setName('');
                 setEmail('');
                 setPassword('');
-                setCity('')
-                setPlayerAmount('')
-                setNumber('')
+                setCity('');
+                setPlayerAmount('');
+                setNumber('');
                 navigate('/login');
             } else {
-                console.error('Error al Registrarse');
+                console.error('Error al registrarse');
             }
         } catch (error) {
             console.error('Error de red', error);
@@ -39,55 +40,56 @@ function Register() {
     };
 
     return (
-        <div>
-            <h2>Registro de usuario:</h2>
+        <div className="container">
+            <div className="logo-container">
+                <img src={logo} alt="Logo" className="logo" />
+            </div>
+            <h2>Registro de usuario</h2>
             <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Nombre de Equipo:</label>
+                <div className="input-container">
                     <input
                         type="text"
+                        placeholder="Nombre de Equipo"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         required
                     />
                 </div>
-                <div>
-                    <label>Correo electrónico:</label>
+                <div className="input-container">
                     <input
                         type="email"
+                        placeholder="Correo electrónico"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
-
                     />
                 </div>
-                <div>
-                    <label>Contraseña:</label>
+                <div className="input-container">
                     <input
                         type="password"
+                        placeholder="Contraseña"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required
                     />
                 </div>
-                <div>
-                    <label>Número de teléfono:</label>
+                <div className="input-container">
                     <input
                         type="number"
-                        placeholder={"(+54)"}
+                        placeholder="Número de teléfono"
                         value={number}
                         onChange={(e) => setNumber(e.target.value)}
                         required
                     />
                 </div>
-                <div>
-                    <label>Localidad:</label>
+                <div className="input-container">
                     <select
                         className="dropdown"
                         value={city}
                         onChange={(e) => setCity(e.target.value)}
                         required
                     >
+                        <option value="">Selecciona una localidad</option>
                         <option value="">Selecciona una opción</option>
                         <option value="Almirante Brown">Almirante Brown</option>
                         <option value="Avellaneda">Avellaneda</option>
@@ -136,15 +138,14 @@ function Register() {
 
                     </select>
                 </div>
-                <div>
-                    <label>Cantidad de jugadores:</label>
+                <div className="input-container">
                     <select
                         className="dropdown"
                         value={playerAmount}
                         onChange={(e) => setPlayerAmount(e.target.value)}
                         required
                     >
-                        <option value="">Selecciona una opción</option>
+                        <option value="">Cantidad de jugadores</option>
                         <option value="5">5</option>
                         <option value="7">7</option>
                         <option value="8">8</option>
@@ -153,9 +154,11 @@ function Register() {
                 </div>
                 <button type="submit">Registrarse</button>
             </form>
-            <button onClick={() => navigate('/login')}>Volver</button>
+            <div className="return-button">
+                <button onClick={() => navigate('/login')}>Volver</button>
+            </div>
         </div>
-    )
+    );
 }
 
 export default Register;
