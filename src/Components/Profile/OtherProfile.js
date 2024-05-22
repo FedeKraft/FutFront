@@ -62,6 +62,7 @@ function OtherProfile() {
             <p>Número: {profile.number}</p>
             <button onClick={handleMatch}>Solicitar Match</button>
             <button onClick={() => navigate('/home')}>Volver al inicio</button>
+            <button onClick={() => navigate('/MatchHistory')}>Ver historial de partidos</button>
         </div>
     );
 }

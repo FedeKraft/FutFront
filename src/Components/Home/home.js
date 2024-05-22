@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, {useState, useEffect} from 'react';
+import {useNavigate} from 'react-router-dom';
 
 async function getTeams() {
     const token = localStorage.getItem('token');
@@ -22,6 +22,7 @@ async function getTeams() {
 function HomePage() {
     const navigate = useNavigate();
     const [teams, setTeams] = useState([]);
+    const [history, setHistory] = useState([]);
 
     useEffect(() => {
         getTeams().then(setTeams);
@@ -41,7 +42,7 @@ function HomePage() {
             ))}
             <button onClick={() => navigate('/profile')}>Ver perfil</button>
             <button onClick={() => navigate('/notifications')}>Notificaciones</button>
-
+            <button onClick={() => navigate('/MatchHistory')}>Match History</button>
         </div>
     );
 }
