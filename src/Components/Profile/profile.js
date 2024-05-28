@@ -11,7 +11,7 @@ function Profile() {
         number: '',
         userStatus: '',
         elo: '',
-
+        stars: ''
     });
     const token = localStorage.getItem('token');
     const navigate = useNavigate();
@@ -72,13 +72,13 @@ function Profile() {
     <div>
         <h1>Perfil</h1>
         <div>
-
             <p>Nombre de equipo: {profile.name}</p>
             <p>Correo electrónico: {profile.email}</p>
             <p>Localidad: {profile.city}</p>
             <p>Cantidad de jugadores: {profile.playerAmount}</p>
             <p>Número de teléfono: {profile.number}</p>
             <p>Elo: {profile.elo}</p>
+            <p>Stars: {profile.stars}</p>
 
             <button onClick={() => navigate('/EditProfile')}>Editar</button>
             <button onClick={toggleActiveStatus}>{profile.userStatus === 'ACTIVE' ? 'Activo' : 'Desactivo'}</button>
