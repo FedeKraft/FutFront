@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './home.css';
 import logo from '../../todo.png';
+import { GrTrophy } from 'react-icons/gr'; // Importa el ícono de trofeo
 
 async function getTeams() {
     const token = localStorage.getItem('token');
@@ -54,11 +55,15 @@ function HomePage() {
             </div>
             <div className="team-list">
                 {teams.map((team) => (
-                    <div key={team.id} className="team-card">
-                        <h2>{team.name}</h2>
-                        <p>Puntos: {team.elo}</p>
-                        <p>Localidad: {team.city}</p>
-                        <button onClick={() => navigate(`/profile/${team.id}`)}>Ver Perfil</button>
+                    <div key={team.id} className="team-card" onClick={() => navigate(`/profile/${team.id}`)}>
+                        <div className="team-info">
+                            <h2>{team.name}</h2>
+                            <p className="team-city">{team.city}</p>
+                        </div>
+                        <div className="team-elo-container">
+                            <GrTrophy className="trophy-icon" />
+                            <p className="team-elo">{team.elo}</p>
+                        </div>
                     </div>
                 ))}
             </div>
