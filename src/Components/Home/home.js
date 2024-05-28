@@ -45,7 +45,7 @@ function HomePage() {
                 <button className="menu-button" onClick={handleMenuToggle}>☰</button>
             </header>
             <div className={`menu-dropdown ${menuOpen ? 'open' : ''}`}>
-                <button onClick={() => navigate('/profile')}>Editar Perfil</button>
+                <button onClick={() => navigate('/profile')}>Mi Perfil</button>
                 <button onClick={() => navigate('/notifications')}>Notificaciones</button>
                 <button onClick={() => navigate('/ranking')}>Ranking</button>
                 <button onClick={() => navigate('/MatchHistory')}>Historial</button>
@@ -56,7 +56,7 @@ function HomePage() {
                 {teams.map((team) => (
                     <div key={team.id} className="team-card">
                         <h2>{team.name}</h2>
-                        <p>Puntos: {team.points}</p>
+                        <p>Puntos: {team.elo}</p>
                         <p>Localidad: {team.city}</p>
                         <button onClick={() => navigate(`/profile/${team.id}`)}>Ver Perfil</button>
                     </div>

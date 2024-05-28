@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import {jwtDecode} from "jwt-decode";
 
 function Profile() {
     const [profile, setProfile] = useState({
@@ -8,7 +9,9 @@ function Profile() {
         city: '',
         playerAmount: '',
         number: '',
-        userStatus: ''
+        userStatus: '',
+        elo: '',
+
     });
     const token = localStorage.getItem('token');
     const navigate = useNavigate();
@@ -65,17 +68,19 @@ function Profile() {
             fetchData();
     }, [token]);
 
-
     return (
     <div>
         <h1>Perfil</h1>
         <div>
+
             <p>Nombre de equipo: {profile.name}</p>
             <p>Correo electrónico: {profile.email}</p>
             <p>Localidad: {profile.city}</p>
             <p>Cantidad de jugadores: {profile.playerAmount}</p>
             <p>Número de teléfono: {profile.number}</p>
-            <button onClick={() => navigate('/EditProfile')}>editar</button>
+            <p>Elo: {profile.elo}</p>
+
+            <button onClick={() => navigate('/EditProfile')}>Editar</button>
             <button onClick={toggleActiveStatus}>{profile.userStatus === 'ACTIVE' ? 'Activo' : 'Desactivo'}</button>
         </div>
         <button onClick={handleLogout}>Cerrar sesión</button>
