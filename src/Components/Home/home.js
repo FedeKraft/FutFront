@@ -48,7 +48,7 @@ function HomePage() {
                 <button onClick={() => navigate('/profile')}>Editar Perfil</button>
                 <button onClick={() => navigate('/notifications')}>Notificaciones</button>
                 <button onClick={() => navigate('/ranking')}>Ranking</button>
-                <button onClick={() => navigate('/history')}>Historial</button>
+                <button onClick={() => navigate('/MatchHistory')}>Historial</button>
                 <button onClick={() => navigate('/incidents')}>Incidentes</button>
                 <button onClick={handleLogout}>Cerrar Sesión</button>
             </div>

@@ -37,12 +37,12 @@ function History(){
                 currentUserId === match.fromUser.id ? (
                     <div key={match.id} className="match-card">
                         <h2>{match.fromUser.name} ({match.fromUserForm.goalsInFavor}) - ({match.toUserForm.goalsInFavor}) {match.toUser.name}</h2>
-                        <button onClick={() => navigate(`/OtherProfile/${match.toUser.id}`)}>Ver Perfil</button>
+                        <button onClick={() => navigate(`/profile/${match.toUser.id}`)}>Ver Perfil</button>
                     </div>
                 ) : (
                     <div key={match.id} className="match-card">
                         <h2>{match.fromUser.name} ({match.fromUserForm.goalsInFavor}) - ({match.toUserForm.goalsInFavor}) {match.toUser.name}</h2>
-                        <button onClick={() => navigate(`/OtherProfile/${match.fromUser.id}`)}>Ver Perfil</button>
+                        <button onClick={() => navigate(`/profile/${match.fromUser.id}`)}>Ver Perfil</button>
                     </div>
                 )
             ))}
