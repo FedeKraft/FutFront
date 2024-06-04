@@ -144,7 +144,7 @@ function Notifications() {
                     )
                 }
             })}
-            <button onClick={handleBack}> {}
+            <button onClick={() => navigate('/home')}>
                 <MdOutlineKeyboardBackspace size={24}/>
             </button>
         </div>

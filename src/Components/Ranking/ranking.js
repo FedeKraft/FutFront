@@ -49,14 +49,15 @@ function Ranking() {
                 if (team.id.toString() === currentUserId) {
                     return (
                         <div key={team.id} className="team-card">
-                            <h2>{ranking.findIndex(obj => obj === team) + 1}. {team.name}(tú) <FaTrophy/> {team.elo}</h2>
-                            <button onClick={() => navigate(`/profile`)}>Ver Perfil</button>
+                            <h2>{ranking.findIndex(obj => obj === team) + 1}. {team.name}(tú)<br/>
+                                <FaTrophy/> {team.elo}</h2>
+                            <button onClick={() => navigate(`/profile`)} className={"botonHomo"}>Ver Perfil</button>
                         </div>
                     )
                 } else return (
                     <div key={team.id} className="team-card">
-                        <h2>{ranking.findIndex(obj => obj === team) + 1}. {team.name} <FaTrophy/>{team.elo}</h2>
-                        <button onClick={() => navigate(`/profile/${team.id}`)}>Ver Perfil</button>
+                        <h2>{ranking.findIndex(obj => obj === team) + 1}. {team.name}<br/> <FaTrophy/>{team.elo}</h2>
+                        <button onClick={() => navigate(`/profile/${team.id}`)} className={"botonHomo"}>Ver Perfil</button>
                     </div>
 
                 )
