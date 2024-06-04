@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './home.css';
 import logo from '../../todo.png';
-import { GrTrophy } from 'react-icons/gr'; // Importa el ícono de trofeo
+import { GrTrophy } from 'react-icons/gr';
+import {jwtDecode} from "jwt-decode"; // Importa el ícono de trofeo
 
 async function getTeams() {
     const token = localStorage.getItem('token');
@@ -25,6 +26,8 @@ function HomePage() {
     const navigate = useNavigate();
     const [teams, setTeams] = useState([]);
     const [menuOpen, setMenuOpen] = useState(false);
+    const token = localStorage.getItem('token');
+    const id = jwtDecode(token).id;
 
     useEffect(() => {
         getTeams().then(setTeams);
@@ -50,7 +53,7 @@ function HomePage() {
                 <button onClick={() => navigate('/notifications')}>Notificaciones</button>
                 <button onClick={() => navigate('/ranking')}>Ranking</button>
                 <button onClick={() => navigate('/MatchHistory')}>Historial</button>
-                <button onClick={() => navigate('/incidents')}>Incidentes</button>
+                <button onClick={() => navigate(`/incidents/${id}`)}>Incidentes</button>
                 <button onClick={handleLogout}>Cerrar Sesión</button>
             </div>
             <div className="team-list">

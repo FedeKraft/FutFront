@@ -62,6 +62,7 @@ function OtherProfile() {
             <p>Elo: {profile.elo}</p>
             <p>Stars: {profile.stars}</p>
 
+            <button onClick={() => navigate(`/incidents/${id}`)}>Ver incidentes de este usuario</button>
             <button onClick={handleMatch}>Solicitar Match</button>
             <button onClick={() => navigate('/home')}>Volver al inicio</button>
             <button onClick={() => navigate('/MatchHistory')}>Ver historial de partidos</button>
