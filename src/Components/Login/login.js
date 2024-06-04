@@ -26,6 +26,7 @@ function Login() {
                 setEmail('');
                 setPassword('');
                 navigate('/home');
+                navigate('/home', { replace: true });
             } else {
                 console.error('Credenciales inválidas');
                 setEmail('');

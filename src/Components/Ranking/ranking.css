@@ -1,0 +1,22 @@
+.cont{
+    width: 100%;
+    max-width: 1200px;
+    max-height: 100vh; /* Ajusta la altura máxima al 100% de la altura de la ventana del navegador */
+    background-color: #f5f5f5;
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    overflow-y: auto; /* Permite el desplazamiento vertical cuando el contenido excede la altura del contenedor */
+    text-align: center;
+    margin: auto;
+    box-sizing: border-box;
+}
+
+.cabeza{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 1rem;
+
+}

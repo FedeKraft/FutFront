@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './home.css';
-import logo from '../../todo.png';
+import logo from '../../futmatchLogo.png';
 import { GrTrophy } from 'react-icons/gr';
 import {jwtDecode} from "jwt-decode"; // Importa el ícono de trofeo
 
