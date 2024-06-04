@@ -36,7 +36,8 @@ function Ranking() {
 
     function togglePopup() {
         setShowPopup(!showPopup);
-      
+    }
+
     const handleBack = () => {
         // Evita volver si ya estás en la página de inicio
         if (location.pathname !== '/home') {
@@ -49,7 +50,7 @@ function Ranking() {
     }, []);
 
     return (
-        <div>
+        <div className={"home-container"}>
             <h1>Ranking</h1>
             <button onClick={togglePopup}>Filtrar</button>
             {showPopup && (
@@ -155,7 +156,7 @@ function Ranking() {
                     } else {
                         return (
                             <div key={team.id} className="team-card">
-                                <h3>{index + 1}. {team.name}<br/> <FaTrophy/> {team.elo}</h3>
+                                <h2>{index + 1}. {team.name}<br/> <FaTrophy/> {team.elo}</h2>
                                 <button onClick={() => navigate(`/profile/${team.id}`)} className={"botonHomo"}>Ver Perfil</button>
                             </div>
                         )
@@ -168,6 +169,7 @@ function Ranking() {
 
     )
 }
+
 
 export default Ranking;
 
