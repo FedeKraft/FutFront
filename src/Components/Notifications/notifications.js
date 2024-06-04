@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import {useNavigate} from 'react-router-dom';
+import {useLocation, useNavigate} from 'react-router-dom';
+import {MdOutlineKeyboardBackspace} from "react-icons/md";
 
 async function getNotifications() {
     const token = localStorage.getItem('token');
@@ -90,7 +91,13 @@ async function matchCanceled(notification, setNotifications) {
 function Notifications() {
     const navigate = useNavigate();
     const [notifications, setNotifications] = useState([]);
-
+    const location = useLocation();
+    const handleBack = () => {
+        // Evita volver si ya estás en la página de inicio
+        if (location.pathname !== '/home') {
+            navigate(-1);
+        }
+    }
     useEffect(() => {
         getNotifications().then(notifications => {
             setNotifications(notifications);
@@ -113,17 +120,22 @@ function Notifications() {
                                     navigate('/form', {state: {notification}});
                                 }}>Informar resultado
                                 </button>
-                                <button onClick={() => matchCanceled(notification, setNotifications)}>Partido cancelado</button>
+                                <button onClick={() => matchCanceled(notification, setNotifications)}>Partido
+                                    cancelado
+                                </button>
                             </div>
                         )
-                    }
-                    else return (
+                    } else return (
                         <div key={notification.id} className="notification-card">
                             {notification.match.status === 'PENDING' ? (
                                 <>
                                     <p>{notification.message}</p>
-                                    <button onClick={() => acceptNotification(notification, setNotifications, notifications)}>Aceptar</button>
-                                    <button onClick={() => rejectNotification(notification, setNotifications, notifications)}>Rechazar</button>
+                                    <button
+                                        onClick={() => acceptNotification(notification, setNotifications, notifications)}>Aceptar
+                                    </button>
+                                    <button
+                                        onClick={() => rejectNotification(notification, setNotifications, notifications)}>Rechazar
+                                    </button>
                                 </>
                             ) : (
                                 <p>{notification.message}</p>
@@ -132,7 +144,9 @@ function Notifications() {
                     )
                 }
             })}
-            <button onClick={() => navigate('/home')}>Volver a la página de inicio</button>
+            <button onClick={() => navigate('/home')}>
+                <MdOutlineKeyboardBackspace size={24}/>
+            </button>
         </div>
     )
 }

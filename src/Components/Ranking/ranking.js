@@ -1,6 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import {useNavigate} from 'react-router-dom';
+import {useNavigate, useLocation} from 'react-router-dom';
 import {jwtDecode} from "jwt-decode";
+import {MdOutlineKeyboardBackspace} from "react-icons/md";
+import './ranking.css';
+import {FaTrophy} from "react-icons/fa";
 
 async function getRanking() {
     const token = localStorage.getItem('token');
@@ -28,9 +31,17 @@ function Ranking() {
     const [cityFilter, setCityFilter] = useState(null);
     const [playerFilter, setPlayerFilter] = useState(null);
     const [fairplayFilter, setFairplayFilter] = useState(null);
+    const location = useLocation();
+
 
     function togglePopup() {
         setShowPopup(!showPopup);
+      
+    const handleBack = () => {
+        // Evita volver si ya estás en la página de inicio
+        if (location.pathname !== '/home') {
+            navigate(-1);
+        }
     }
 
     useEffect(() => {
@@ -137,20 +148,24 @@ function Ranking() {
                     if (team.id.toString() === currentUserId) {
                         return (
                             <div key={team.id} className="team-card">
-                                <h2>{index + 1}. {team.name} {team.elo}</h2>
-                                <button onClick={() => navigate(`/profile`)}>Ver Perfil</button>
+                                <h2>{index + 1}. {team.name}(tú)<br/> <FaTrophy/> {team.elo}</h2>
+                                <button onClick={() => navigate(`/profile`)} className={"botonHomo"}>Ver Perfil</button>
                             </div>
                         )
                     } else {
                         return (
                             <div key={team.id} className="team-card">
-                                <h3>{index + 1}. {team.name} {team.elo}</h3>
-                                <button onClick={() => navigate(`/profile/${team.id}`)}>Ver Perfil</button>
+                                <h3>{index + 1}. {team.name}<br/> <FaTrophy/> {team.elo}</h3>
+                                <button onClick={() => navigate(`/profile/${team.id}`)} className={"botonHomo"}>Ver Perfil</button>
                             </div>
                         )
                     }
                 })}
+                <button onClick={handleBack}>
+                   <MdOutlineKeyboardBackspace size={24}/>
+                </button>
         </div>
+
     )
 }
 

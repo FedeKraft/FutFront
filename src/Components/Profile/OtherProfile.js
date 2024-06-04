@@ -1,12 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
+import { MdOutlineKeyboardBackspace } from "react-icons/md";
+import './profile.css';
+import {FaStar, FaTrophy} from "react-icons/fa";
+
+
 
 function OtherProfile() {
     const {id} = useParams();
     const navigate = useNavigate();
+    const location = useLocation();
     const [profile, setProfile] = useState(null);
 
+    const handleBack = () => {
+        // Evita volver si ya estás en la página de inicio
+        if (location.pathname !== '/home') {
+            navigate(-1);
+        }
+    }
     useEffect(() => {
         const fetchProfile = async () => {
             const token = localStorage.getItem('token');
@@ -55,16 +67,24 @@ function OtherProfile() {
 
     return (
         <div>
-            <h1>Perfil de {profile.name}</h1>
-            <p>Email: {profile.email}</p>
-            <p>Ciudad: {profile.city}</p>
-            <p>Cantidad de jugadores: {profile.playerAmount}</p>
-            <p>Elo: {profile.elo}</p>
-            <p>Stars: {profile.stars}</p>
-
+            <h1 className={"title"}>Perfil de {profile.name}</h1>
+            <p className={"kk"}>Email: {profile.email}</p>
+            <p className={"kk"}>Ciudad: {profile.city}</p>
+            <p className={"kk"}>Cantidad de jugadores: {profile.playerAmount}</p>
+            <div className="elo">
+                <p className={"kk"}><FaTrophy/> {profile.elo}</p>
+            </div>
+            <div className="stars">
+                <p className={"kk"}>Fairplay: </p>{[...Array(Number(profile.stars))].map((_, i) =>
+                <FaStar key={i} color="yellow"/>)}
+            </div>
+            <br/>
+            <button onClick={() => navigate(`/incidents/${id}`)}>Ver incidentes de este usuario</button>
             <button onClick={handleMatch}>Solicitar Match</button>
-            <button onClick={() => navigate('/home')}>Volver al inicio</button>
             <button onClick={() => navigate('/MatchHistory')}>Ver historial de partidos</button>
+            <button onClick={handleBack}>
+                <MdOutlineKeyboardBackspace size={24}/>
+            </button>
         </div>
     );
 }

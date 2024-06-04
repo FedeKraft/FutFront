@@ -1,5 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import {useNavigate} from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { MdOutlineKeyboardBackspace } from "react-icons/md";
+import './profile.css';
 
 
 async function updateProfile(profile) {
@@ -29,6 +31,13 @@ function EditProfile() {
         number: ''
     });
     const navigate = useNavigate();
+    const location = useLocation();
+    const handleBack = () => {
+        // Evita volver si ya estás en la página de inicio
+        if (location.pathname !== '/home') {
+            navigate(-1);
+        }
+    }
 
     useEffect(() => {
         const storedProfile = localStorage.getItem('profile');
@@ -142,6 +151,9 @@ function EditProfile() {
                     <input type="text" name="number" value={profile.number} onChange={handleChange} required/>
                 </label>
                 <button type="submit">Guardar</button>
+                <button onClick={handleBack}>
+                    <MdOutlineKeyboardBackspace size={24}/>
+                </button>
             </form>
         </div>
     );
