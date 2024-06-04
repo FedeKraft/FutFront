@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './home.css';
-import logo from '../../todo.png';
-import { GrTrophy } from 'react-icons/gr'; // Importa el ícono de trofeo
+import logo from '../../futmatchLogo.png';
+import { GrTrophy } from 'react-icons/gr';
 
 async function getTeams() {
     const token = localStorage.getItem('token');

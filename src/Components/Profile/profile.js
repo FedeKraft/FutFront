@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import {useLocation, useNavigate} from 'react-router-dom';
 import {jwtDecode} from "jwt-decode";
+import { MdOutlineKeyboardBackspace } from "react-icons/md";
+import './profile.css';
+import { FaTrophy, FaStar } from "react-icons/fa";
+
+
 
 function Profile() {
     const [profile, setProfile] = useState({
@@ -13,6 +18,13 @@ function Profile() {
         elo: '',
         stars: ''
     });
+        const location = useLocation();
+        const handleBack = () => {
+            // Evita volver si ya estás en la página de inicio
+            if (location.pathname !== '/home') {
+                navigate(-1);
+            }
+        }
     const token = localStorage.getItem('token');
     const navigate = useNavigate();
 
@@ -69,24 +81,31 @@ function Profile() {
     }, [token]);
 
     return (
-    <div>
-        <h1>Perfil</h1>
         <div>
-            <p>Nombre de equipo: {profile.name}</p>
-            <p>Correo electrónico: {profile.email}</p>
-            <p>Localidad: {profile.city}</p>
-            <p>Cantidad de jugadores: {profile.playerAmount}</p>
-            <p>Número de teléfono: {profile.number}</p>
-            <p>Elo: {profile.elo}</p>
-            <p>Stars: {profile.stars}</p>
-
-            <button onClick={() => navigate('/EditProfile')}>Editar</button>
-            <button onClick={toggleActiveStatus}>{profile.userStatus === 'ACTIVE' ? 'Activo' : 'Desactivo'}</button>
+            <h1 className={"title"}>Perfil</h1>
+            <div>
+                <p className={"kk"}>Nombre de equipo: {profile.name}</p>
+                <p className={"kk"}>Correo electrónico: {profile.email}</p>
+                <p className={"kk"}> Localidad: {profile.city}</p>
+                <p className={"kk"}>Cantidad de jugadores: {profile.playerAmount}</p>
+                <p className={"kk"}>Número de teléfono: {profile.number}</p>
+                <div className="elo">
+                    <p className={"kk"}><FaTrophy/> {profile.elo}</p>
+                </div>
+                <div className="stars">
+                    <p className={"kk"}>Fairplay: </p>{[...Array(Number(profile.stars))].map((_, i) =>
+                    <FaStar key={i} color="yellow"/>)}
+                </div>
+                <br/>
+                <button onClick={() => navigate('/EditProfile')}>Editar</button>
+                <button onClick={toggleActiveStatus}>{profile.userStatus === 'ACTIVE' ? 'Activo' : 'Desactivo'}</button>
+            </div>
+            <button onClick={handleLogout}>Cerrar sesión</button>
+            <button onClick={handleBack}>
+            <MdOutlineKeyboardBackspace size={24}/>
+            </button>
         </div>
-        <button onClick={handleLogout}>Cerrar sesión</button>
-        <button onClick={() => navigate('/home')}>Volver al inicio</button>
-    </div>
-);
+    );
 }
 
 export default Profile;
