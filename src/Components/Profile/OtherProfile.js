@@ -79,6 +79,7 @@ function OtherProfile() {
                 <FaStar key={i} color="yellow"/>)}
             </div>
             <br/>
+            <button onClick={() => navigate(`/incidents/${id}`)}>Ver incidentes de este usuario</button>
             <button onClick={handleMatch}>Solicitar Match</button>
             <button onClick={() => navigate('/MatchHistory')}>Ver historial de partidos</button>
             <button onClick={handleBack}>

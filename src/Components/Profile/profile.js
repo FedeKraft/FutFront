@@ -27,6 +27,7 @@ function Profile() {
         }
     const token = localStorage.getItem('token');
     const navigate = useNavigate();
+    const id = jwtDecode(token).id;
 
     const handleLogout = () => {
         localStorage.removeItem('token'); // Borra el token del almacenamiento local
@@ -100,6 +101,7 @@ function Profile() {
                 <button onClick={() => navigate('/EditProfile')}>Editar</button>
                 <button onClick={toggleActiveStatus}>{profile.userStatus === 'ACTIVE' ? 'Activo' : 'Desactivo'}</button>
             </div>
+            <button onClick={() => navigate(`/incidents/${id}`)}>Ver incidentes</button>
             <button onClick={handleLogout}>Cerrar sesión</button>
             <button onClick={handleBack}>
             <MdOutlineKeyboardBackspace size={24}/>
