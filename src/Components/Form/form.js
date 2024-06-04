@@ -4,7 +4,6 @@ import { useNavigate, useLocation } from 'react-router-dom';
 function Form() {
     const [goalsInFavor, setGoalsInFavor] = useState('');
     const [goalsAgainst, setGoalsAgainst] = useState('');
-    const [punctuality, setPunctuality] = useState('');
     const [fairPlay, setFairPlay] = useState('');
     const [comment, setComment] = useState('');
     const notification = useLocation().state.notification;
@@ -26,7 +25,6 @@ function Form() {
                 body: JSON.stringify({
                     goalsInFavor: goalsInFavor,
                     goalsAgainst: goalsAgainst,
-                    punctuality: punctuality,
                     fairPlay: fairPlay,
                     comment: comment,
                     fromNotificationId: notification.id
@@ -48,7 +46,6 @@ function Form() {
                 // Limpia los campos y redirige a la página de inicio
                 setGoalsInFavor('')
                 setGoalsAgainst('');
-                setPunctuality('');
                 setFairPlay('');
                 setComment('');
                 navigate('/notifications');
@@ -76,14 +73,6 @@ function Form() {
                 <label>
                     Goles en contra:
                     <input type="number" value={goalsAgainst} onChange={(e) => setGoalsAgainst(e.target.value)} required />
-                </label>
-                <label>
-                    Puntualidad:
-                    <select value={punctuality} onChange={(e) => setPunctuality(e.target.value)} required>
-                        <option value="">Selecciona una opción</option>
-                        <option value="fueron puntuales">Fueron puntuales</option>
-                        <option value="llegaron tarde">Llegaron tarde</option>
-                    </select>
                 </label>
                 <label>
                     ¿Como fue tu experiencia con el equipo rival?

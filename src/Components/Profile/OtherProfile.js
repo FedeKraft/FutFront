@@ -60,6 +60,8 @@ function OtherProfile() {
             <p>Ciudad: {profile.city}</p>
             <p>Cantidad de jugadores: {profile.playerAmount}</p>
             <p>Elo: {profile.elo}</p>
+            <p>Stars: {profile.stars}</p>
+
             <button onClick={handleMatch}>Solicitar Match</button>
             <button onClick={() => navigate('/home')}>Volver al inicio</button>
             <button onClick={() => navigate('/MatchHistory')}>Ver historial de partidos</button>
