@@ -90,7 +90,6 @@ function Register() {
                         required
                     >
                         <option value="">Selecciona una localidad</option>
-                        <option value="">Selecciona una opción</option>
                         <option value="Almirante Brown">Almirante Brown</option>
                         <option value="Avellaneda">Avellaneda</option>
                         <option value="Berazategui">Berazategui</option>
