@@ -10,6 +10,7 @@ import Form from "./Components/Form/form";
 import Ranking from "./Components/Ranking/ranking";
 import MatchHistory from "./Components/MatchHistory/MatchHistory";
 import Incidents from './Components/Incidents/incidents';
+import ForgotPassword from "./Components/forgotPassword/forgotPassword";
 import {BrowserRouter, Navigate, Outlet, Route, Routes} from "react-router-dom";
 import {jwtDecode} from "jwt-decode";
 
@@ -44,6 +45,7 @@ function App() {
                             <Route path="/ranking" element={<Ranking/>}/>
                             <Route path={"/MatchHistory"} element={<MatchHistory/>}/>
                             <Route path={"/incidents/:id"} element={<Incidents/>}/>
+                            <Route path={"/forgotPassword"} element={<ForgotPassword/>}/>
                         </Route>
                     </Routes>
                 </BrowserRouter>

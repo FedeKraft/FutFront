@@ -43,13 +43,13 @@ function Login() {
                 <img src={logo} alt="Logo" className="logo" />
             </div>
             <hr />
-            <h2>Log In</h2>
+            <h2>Inicio de sesión</h2>
             <hr />
             <form onSubmit={handleSubmit}>
                 <div className="input-container">
                     <input
                         type="email"
-                        placeholder="Email"
+                        placeholder="Correo electrónico"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
@@ -60,7 +60,7 @@ function Login() {
 
                     <input
                         type={showPassword ? 'text' : 'password'}
-                        placeholder="Password"
+                        placeholder="Contraseña"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required
@@ -69,16 +69,16 @@ function Login() {
                         className="show-password"
                         onClick={() => setShowPassword(!showPassword)}
                     >
-                        {showPassword ? 'Hide' : 'Show'}
+                        {showPassword ? 'Ocultar' : 'Mostrar'}
                     </span>
                 </div>
                 <hr />
-                <button type="submit">Log In</button>
+                <button type="submit">Iniciar sesión</button>
                 <button onClick={() => navigate('/register')} className="register-button">Registrarse</button>
             </form>
             <hr />
             <div className="forgot-password">
-                <a href="/forgot-password">Forgot your password?</a>
+                <a href="/forgotPassword">¿Olvidaste tu contraseña?</a>
             </div>
         </div>
     );
