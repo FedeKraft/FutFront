@@ -15,6 +15,7 @@ function Profile() {
     });
     const token = localStorage.getItem('token');
     const navigate = useNavigate();
+    const id = jwtDecode(token).id;
 
     const handleLogout = () => {
         localStorage.removeItem('token'); // Borra el token del almacenamiento local
@@ -69,24 +70,25 @@ function Profile() {
     }, [token]);
 
     return (
-    <div>
-        <h1>Perfil</h1>
         <div>
-            <p>Nombre de equipo: {profile.name}</p>
-            <p>Correo electrónico: {profile.email}</p>
-            <p>Localidad: {profile.city}</p>
-            <p>Cantidad de jugadores: {profile.playerAmount}</p>
-            <p>Número de teléfono: {profile.number}</p>
-            <p>Elo: {profile.elo}</p>
-            <p>Stars: {profile.stars}</p>
+            <h1>Perfil</h1>
+            <div>
+                <p>Nombre de equipo: {profile.name}</p>
+                <p>Correo electrónico: {profile.email}</p>
+                <p>Localidad: {profile.city}</p>
+                <p>Cantidad de jugadores: {profile.playerAmount}</p>
+                <p>Número de teléfono: {profile.number}</p>
+                <p>Elo: {profile.elo}</p>
+                <p>Stars: {profile.stars}</p>
 
-            <button onClick={() => navigate('/EditProfile')}>Editar</button>
-            <button onClick={toggleActiveStatus}>{profile.userStatus === 'ACTIVE' ? 'Activo' : 'Desactivo'}</button>
+                <button onClick={() => navigate('/EditProfile')}>Editar</button>
+                <button onClick={toggleActiveStatus}>{profile.userStatus === 'ACTIVE' ? 'Activo' : 'Desactivo'}</button>
+            </div>
+            <button onClick={() => navigate(`/incidents/${id}`)}>Ver incidentes</button>
+            <button onClick={handleLogout}>Cerrar sesión</button>
+            <button onClick={() => navigate('/home')}>Volver al inicio</button>
         </div>
-        <button onClick={handleLogout}>Cerrar sesión</button>
-        <button onClick={() => navigate('/home')}>Volver al inicio</button>
-    </div>
-);
+    );
 }
 
 export default Profile;
