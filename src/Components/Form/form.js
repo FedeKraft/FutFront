@@ -86,7 +86,7 @@ function Form() {
                     </select>
                 </label>
                 <label>
-                    Comentario (opcional):
+                    Queja acerca del rival (opcional):
                     <textarea value={comment} onChange={(e) => setComment(e.target.value)}/>
                 </label>
                 <button type="submit">Enviar</button>
