@@ -37,7 +37,6 @@ function Notifications() {
             })
         });
         if (response.ok) {
-            alert('Match aceptado');
             // Crea un arreglo con las notificaciones que no sean la notificación aceptada
             const newNotifications = notifications.filter(n => n.id !== notification.id);
             setNotifications(newNotifications);

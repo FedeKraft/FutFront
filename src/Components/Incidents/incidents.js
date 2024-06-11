@@ -4,7 +4,7 @@ import './../Home/home.css';
 
 
 function Incidents() {
-    const { id } = useParams();
+    const {id} = useParams();
     const [forms, setForms] = useState([]);
 
     const fetchForm = async () => {
@@ -32,10 +32,13 @@ function Incidents() {
         <div>
             <h1>Incidentes</h1>
             {forms.map((form, index) => (
-                <div key={index}>
-                    <h3>{form.user.name}</h3>
-                    <p>{form.comment}</p>
-                </div>))}
+                form.comment !== '' ? (
+                    <div key={index}>
+                        <h3>{form.user.name}</h3>
+                        <p>{form.comment}</p>
+                    </div>
+                ) : null
+            ))}
         </div>
     );
 }
