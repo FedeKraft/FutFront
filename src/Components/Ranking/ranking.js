@@ -32,7 +32,7 @@ function Ranking() {
     const [playerFilter, setPlayerFilter] = useState(null);
     const [fairplayFilter, setFairplayFilter] = useState(null);
     const location = useLocation();
-
+    const [search, setSearch] = useState('');
 
     function togglePopup() {
         setShowPopup(!showPopup);
@@ -52,6 +52,12 @@ function Ranking() {
     return (
         <div className={"home-container"}>
             <h1>Ranking</h1>
+            <input
+                type="text"
+                placeholder="Buscar equipo"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+            />
             <button onClick={togglePopup}>Filtrar</button>
             {showPopup && (
                 <div className="popup">
@@ -142,7 +148,8 @@ function Ranking() {
                     return (
                         (cityFilter ? team.city === cityFilter : true) &&
                         (playerFilter ? team.playerAmount === playerFilter : true) &&
-                        (fairplayFilter ? team.stars === fairplayFilter : true)
+                        (fairplayFilter ? team.stars === fairplayFilter : true) &&
+                        (search ? team.name.toLowerCase().includes(search.toLowerCase()) : true)
                     );
                 })
                 .map((team, index) => {
@@ -157,14 +164,16 @@ function Ranking() {
                         return (
                             <div key={team.id} className="team-card">
                                 <h2>{index + 1}. {team.name}<br/> <FaTrophy/> {team.elo}</h2>
-                                <button onClick={() => navigate(`/profile/${team.id}`)} className={"botonHomo"}>Ver Perfil</button>
+                                <button onClick={() => navigate(`/profile/${team.id}`)} className={"botonHomo"}>Ver
+                                    Perfil
+                                </button>
                             </div>
                         )
                     }
                 })}
-                <button onClick={handleBack}>
-                   <MdOutlineKeyboardBackspace size={24}/>
-                </button>
+            <button onClick={handleBack}>
+                <MdOutlineKeyboardBackspace size={24}/>
+            </button>
         </div>
 
     )

@@ -3,9 +3,9 @@ import { useParams } from 'react-router-dom';
 
 function Incidents() {
     const { id } = useParams();
-    const [incidents, setIncidents] = useState([]);
+    const [forms, setForms] = useState([]);
 
-    const fetchIncidents = async () => {
+    const fetchForm = async () => {
         const token = localStorage.getItem('token');
         const response = await fetch(`http://localhost:8080/auth/users/${id}/incidents`, {
             method: 'GET',
@@ -15,23 +15,25 @@ function Incidents() {
             },
         });
         if (response.ok) {
-            const incidentsData = await response.json();
-            setIncidents(incidentsData);
+            const formsData = await response.json();
+            setForms(formsData);
         } else {
             console.error('Error al obtener los incidentes');
         }
     };
 
     useEffect(() => {
-        fetchIncidents();
+        fetchForm();
     }, [id]);
 
     return (
         <div>
             <h1>Incidentes</h1>
-            {incidents.map((incident, index) => (
-                <p key={index}>{incident}</p>
-            ))}
+            {forms.map((form, index) => (
+                <div key={index}>
+                    <h3>{form.user.name}</h3>
+                    <p>{form.comment}</p>
+                </div>))}
         </div>
     );
 }
