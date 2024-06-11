@@ -66,27 +66,37 @@ function OtherProfile() {
     }
 
     return (
-        <div>
-            <h1 className={"title"}>Perfil de {profile.name}</h1>
-            <p className={"kk"}>Email: {profile.email}</p>
-            <p className={"kk"}>Ciudad: {profile.city}</p>
-            <p className={"kk"}>Cantidad de jugadores: {profile.playerAmount}</p>
-            <div className="elo">
-                <p className={"kk"}><FaTrophy/> {profile.elo}</p>
+        <div className="container">
+            <div className="profile-header">
+                <button className="back-button2" onClick={handleBack}>
+                    <MdOutlineKeyboardBackspace size={24}/>
+                </button>
+                <h1 className="title">Perfil de {profile.name}</h1>
             </div>
-            <div className="stars">
-                <p className={"kk"}>Fairplay: </p>{[...Array(Number(profile.stars))].map((_, i) =>
-                <FaStar key={i} color="yellow"/>)}
-            </div>
+            <div>
+                <p className="kk">Localidad: {profile.city}</p>
+                <p className="kk">Cantidad de jugadores: {profile.playerAmount}</p>
+                <div className="elo">
+                    <p className="kk"><FaTrophy/> {profile.elo}</p>
+                </div>
+                <div className="stars">
+                    <span className="kk">Fairplay:</span>
+                    <div className="star-container">
+                        {[...Array(5)].map((_, i) => i < Number(profile.stars) ?
+                            <FaStar key={i} color="#FFD700" size={20}/> :
+                            <FaStar key={i} color="#D3D3D3" size={20}/> // color gris para estrellas vacías
+                        )}
+                    </div>
+                </div>
+                
             <br/>
             <button onClick={() => navigate(`/incidents/${id}`)}>Ver incidentes de este usuario</button>
             <button onClick={handleMatch}>Solicitar Match</button>
             <button onClick={() => navigate('/MatchHistory')}>Ver historial de partidos</button>
-            <button onClick={handleBack}>
-                <MdOutlineKeyboardBackspace size={24}/>
-            </button>
         </div>
-    );
+</div>
+)
+    ;
 }
 
 export default OtherProfile;

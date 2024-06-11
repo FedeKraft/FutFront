@@ -56,6 +56,46 @@ body {
     overflow-y: auto;
     height: 100vh;
 }
+.back-button2{
+    text-align: left;
+    width: 15%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+.stars {
+    display: flex;
+    align-items: center; /* Alinea verticalmente los elementos */
+}
+
+.star-container {
+    margin-left: 20px; /* Espacio entre el texto y las estrellas */
+}
+.match-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    background-color: #f0f0f0;
+    padding: 10px 20px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: none;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    cursor: pointer;
+    text-align: left;
+    font-size: 18px;
+    color: #000;
+}
+
+
+.match-container:hover {
+    background-color: #e0e0e0;
+}
+
+
+
+
 
 
 

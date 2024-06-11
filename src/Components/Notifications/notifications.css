@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+.notification-card {
+    background-color: #f0f0f0; /* Cambio de fondo a negro */
+    border: 1px solid #ccc; /* Manteniendo el borde sutil */
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Roboto', sans-serif; /* Usando la misma fuente */
+}
+
+.notification-card p {
+    color: black; /* Texto en blanco para mejor contraste con fondo negro */
+    font-size: 16px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.notification-card button {
+    padding: 8px 16px;
+    margin-top: 5px;
+    background-color: #004d00; /* Manteniendo el color de los botones */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.notification-card button:hover {
+    background-color: #002900; /* Oscurecer al pasar el ratón para mantener consistencia */
+}
+
+/* Estilo para mover el botón de 'volver a inicio' al top izquierda */
+.back-button {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+.notification-card2{
+
+}

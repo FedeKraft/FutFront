@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import {useLocation, useNavigate} from 'react-router-dom';
 import {MdOutlineKeyboardBackspace} from "react-icons/md";
 import './notifications.css';
-
 function Notifications() {
     const navigate = useNavigate();
     const [notifications, setNotifications] = useState([]);
@@ -104,8 +103,9 @@ function Notifications() {
 
     return (
         <div>
+            <div className="container">
             <h1>Notificaciones</h1>
-            {notifications.map(notification => {
+            {[...notifications].reverse().map(notification => {
                 if (notification.responded === false) {
                     if (notification.match.status !== 'PENDING' && notification.message.includes('iniciado')) {
                         return null;
@@ -145,6 +145,7 @@ function Notifications() {
             <button onClick={() => navigate('/home')}>
                 <MdOutlineKeyboardBackspace size={24}/>
             </button>
+        </div>
         </div>
     )
 }

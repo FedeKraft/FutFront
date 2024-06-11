@@ -79,7 +79,14 @@ function Profile() {
 
     return (
         <div className="container">
-            <h1 className="title">Perfil</h1>
+            <button className="back-button2" onClick={handleBack}>
+                <MdOutlineKeyboardBackspace size={24}/>
+            </button>
+            <div className="profile-header">
+
+                <h1 className="title">Perfil</h1>
+            </div>
+
             <div>
                 <p className="kk">Nombre de equipo: {profile.name}</p>
                 <p className="kk">Correo electrónico: {profile.email}</p>
@@ -87,22 +94,27 @@ function Profile() {
                 <p className="kk">Cantidad de jugadores: {profile.playerAmount}</p>
                 <p className="kk">Número de teléfono: {profile.number}</p>
                 <div className="elo">
-                    <p className="kk"><FaTrophy /> {profile.elo}</p>
+                    <p className="kk"><FaTrophy/> {profile.elo}</p>
                 </div>
+
                 <div className="stars">
-                    <p className="kk">Fairplay: </p>{[...Array(Number(profile.stars))].map((_, i) =>
-                    <FaStar key={i} color="yellow"  />)}
+                    <span className="kk">Fairplay:</span>
+                    <div className="star-container">
+                        {[...Array(5)].map((_, i) => i < Number(profile.stars) ?
+                            <FaStar key={i} color="#FFD700" size={20}/> :
+                            <FaStar key={i} color="#D3D3D3" size={20}/> // color gris para estrellas vacías
+                        )}
+                    </div>
                 </div>
-                <br />
+                <br/>
                 <button className="edit-button" onClick={() => navigate('/EditProfile')}>Editar</button>
                 <button className={`inactive-button`} onClick={toggleActiveStatus}>
                     {profile.userStatus === 'ACTIVE' ? 'Activo' : 'Desactivo'}
                 </button>
-                <button className="incidents-button" onClick={() => navigate(`/incidents/${profile.id}`)}>Ver incidentes</button>
-                <button className="logout-button" onClick={handleLogout}>Cerrar sesión</button>
-                <button className="back-button" onClick={handleBack}>
-                    <MdOutlineKeyboardBackspace size={24} />
+                <button className="incidents-button" onClick={() => navigate(`/incidents/${profile.id}`)}>Ver
+                    incidentes
                 </button>
+                <button className="logout-button" onClick={handleLogout}>Cerrar sesión</button>
             </div>
         </div>
     );

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {useLocation, useNavigate} from 'react-router-dom';
 import {jwtDecode} from "jwt-decode";
 import {MdOutlineKeyboardBackspace} from "react-icons/md";
-import './../Home/home.css';
+import './../Profile/profile.css';
 
 async function getHistory() {
     const token = localStorage.getItem('token');
@@ -39,28 +39,19 @@ function History(){
         getHistory().then(setHistory);
     }, []);
     return (
-        <div>
-            <h1>Historial</h1>
-            {history.map((match) => (
-                currentUserId === match.fromUser.id ? (
-                    <div key={match.id} className="match-card">
-                        <h2>{match.fromUser.name} ({match.fromUserForm.goalsInFavor}) -
-                            ({match.toUserForm.goalsInFavor}) {match.toUser.name}</h2>
-                        <button onClick={() => navigate(`/profile/${match.toUser.id}`)}>Ver Perfil</button>
-                    </div>
-                ) : (
-                    <div key={match.id} className="match-card">
-                        <h2>{match.fromUser.name} ({match.fromUserForm.goalsInFavor}) -
-                            ({match.toUserForm.goalsInFavor}) {match.toUser.name}</h2>
-                        <button onClick={() => navigate(`/profile/${match.fromUser.id}`)}>Ver Perfil</button>
-                    </div>
-                )
-            ))}
-            <button onClick={handleBack}> {}
+        <div className="container">
+            <button className="back-button2" onClick={handleBack}>
                 <MdOutlineKeyboardBackspace size={24}/>
             </button>
+            <h1 className="title">Historial de Partidos</h1>
+            {history.map((match) => (
+                <button key={match.id} className="match-container" onClick={() => navigate(`/profile/${match.toUser.id}`)}>
+                    {match.fromUser.name} ({match.fromUserForm.goalsInFavor}) -
+                    ({match.toUserForm.goalsInFavor}) {match.toUser.name}
+                </button>
+            ))}
         </div>
-    )
+    );
 }
 
 export default History;
