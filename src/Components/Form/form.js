@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import './../Home/home.css';
 
 function Form() {
     const [goalsInFavor, setGoalsInFavor] = useState('');

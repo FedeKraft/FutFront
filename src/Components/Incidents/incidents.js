@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import './../Home/home.css';
+
 
 function Incidents() {
     const { id } = useParams();

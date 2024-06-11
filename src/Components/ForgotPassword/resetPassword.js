@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import './../Home/home.css';
+
 
 function ResetPassword() {
     const [password, setPassword] = useState('');

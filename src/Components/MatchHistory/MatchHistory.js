@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {useLocation, useNavigate} from 'react-router-dom';
 import {jwtDecode} from "jwt-decode";
 import {MdOutlineKeyboardBackspace} from "react-icons/md";
+import './../Home/home.css';
 
 async function getHistory() {
     const token = localStorage.getItem('token');

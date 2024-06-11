@@ -10,6 +10,7 @@ body {
     min-height: 100vh;
     padding: 20px;
     box-sizing: border-box;
+
 }
 .back-button {
     border: none;
@@ -49,8 +50,12 @@ body {
     font-size: 1.25rem;
     margin-bottom: 0.5rem;
     text-align: left;
-}
 
+}
+.container {
+    overflow-y: auto;
+    height: 100vh;
+}
 
 
 

@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useLocation, useNavigate} from 'react-router-dom';
 import {MdOutlineKeyboardBackspace} from "react-icons/md";
+import './notifications.css';
 
 function Notifications() {
     const navigate = useNavigate();

@@ -1,5 +1,6 @@
 import React from 'react';
 import {useLocation, useNavigate} from "react-router-dom";
+import './../Home/home.css';
 
 function CongratsPage() {
     const notification = useLocation().state.notification;

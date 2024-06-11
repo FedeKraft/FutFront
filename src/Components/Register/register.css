@@ -10,6 +10,7 @@ body {
     height: 100vh;
     padding: 20px;
     box-sizing: border-box;
+
 }
 
 .container {
@@ -24,6 +25,8 @@ body {
     text-align: center;
     margin: auto;
     box-sizing: border-box;
+    overflow-y: auto;
+    height: 100vh;
 }
 
 .logo-container {

@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {useNavigate, useLocation} from 'react-router-dom';
 import {jwtDecode} from "jwt-decode";
 import {MdOutlineKeyboardBackspace} from "react-icons/md";
-import './ranking.css';
+import './../Home/home.css';
 import {FaTrophy} from "react-icons/fa";
 
 async function getRanking() {
