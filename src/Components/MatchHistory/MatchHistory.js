@@ -20,14 +20,25 @@ async function getHistory() {
         console.error('Error al obtener el historial de partidos');
         return [];
     }
-
 }
+
+function getOpponentId(match) {
+    const token = localStorage.getItem('token');
+    const currentUserId = jwtDecode(token).id;
+
+    if (match.fromUser.id === currentUserId) {
+        return match.toUser.id;
+    }
+    else {
+        return match.fromUser.id;
+    }
+}
+
 function History(){
     const navigate = useNavigate();
     const location = useLocation();
     const [history, setHistory] = useState([]);
-    const token = localStorage.getItem('token');
-    const currentUserId = jwtDecode(token).id;
+
     const handleBack = () => {
         // Evita volver si ya estás en la página de inicio
         if (location.pathname !== '/home') {
@@ -45,7 +56,7 @@ function History(){
             </button>
             <h1 className="title">Historial de Partidos</h1>
             {history.map((match) => (
-                <button key={match.id} className="match-container" onClick={() => navigate(`/profile/${match.toUser.id}`)}>
+                <button key={match.id} className="match-container" onClick={() => navigate(`/profile/${getOpponentId(match)}`)}>
                     {match.fromUser.name} ({match.fromUserForm.goalsInFavor}) -
                     ({match.toUserForm.goalsInFavor}) {match.toUser.name}
                 </button>

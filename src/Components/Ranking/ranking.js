@@ -33,6 +33,8 @@ function Ranking() {
     const [fairplayFilter, setFairplayFilter] = useState(null);
     const location = useLocation();
     const [search, setSearch] = useState('');
+    const [currentTeam, setCurrentTeam] = useState(null);
+    const [currentIndex, setCurrentIndex] = useState(null);
 
     function togglePopup() {
         setShowPopup(!showPopup);
@@ -49,9 +51,37 @@ function Ranking() {
         getRanking().then(setRanking);
     }, []);
 
+    function filterRanking(ranking) {
+        return ranking
+            .filter((team) => {
+                return (
+                    (cityFilter ? team.city === cityFilter : true) &&
+                    (playerFilter ? team.playerAmount === playerFilter : true) &&
+                    (fairplayFilter ? team.stars === fairplayFilter : true)
+                );
+            })
+            .map((team, index) => {
+                return { team: search ? team.name.toLowerCase().includes(search.toLowerCase()) ? team : {} : team, index };
+            })
+    }
+
+    useEffect(() => {
+        const filtered = filterRanking(ranking).filter(item => item !== null && item !== undefined);
+        const currentUserTeam = filtered.find((item) => item && item.team && item.team.id && item.team.id.toString() === currentUserId);
+        const currentUserIndex = filtered.findIndex((item) => item && item.team && item.team.id && item.team.id.toString() === currentUserId);
+        setCurrentTeam(currentUserTeam ? currentUserTeam.team : null);
+        setCurrentIndex(currentUserIndex !== -1 ? currentUserIndex : null);
+    }, [ranking, currentUserId, cityFilter, playerFilter, fairplayFilter, search]);
+
+
     return (
         <div className={"home-container"}>
-            <h1>Ranking</h1>
+            <div className="ranking-header">
+                <button className="back-button3" onClick={handleBack}>
+                    <MdOutlineKeyboardBackspace size={24}/>
+                </button>
+                <h1 className="title">Ranking</h1>
+            </div>
             <input
                 type="text"
                 placeholder="Buscar equipo"
@@ -143,39 +173,29 @@ function Ranking() {
                     </div>
                 </div>
             )}
-            {ranking
-                .filter((team) => {
-                    return (
-                        (cityFilter ? team.city === cityFilter : true) &&
-                        (playerFilter ? team.playerAmount === playerFilter : true) &&
-                        (fairplayFilter ? team.stars === fairplayFilter : true) &&
-                        (search ? team.name.toLowerCase().includes(search.toLowerCase()) : true)
-                    );
-                })
-                .map((team, index) => {
-                    if (team.id.toString() === currentUserId) {
-                        return (
-                            <div key={team.id} className="team-card">
-                                <h2>{index + 1}. {team.name}(tú)<br/> <FaTrophy/> {team.elo}</h2>
-                                <button onClick={() => navigate(`/profile`)} className={"botonHomo"}>Ver Perfil</button>
-                            </div>
-                        )
-                    } else {
-                        return (
-                            <div key={team.id} className="team-card">
-                                <h2>{index + 1}. {team.name}<br/> <FaTrophy/> {team.elo}</h2>
-                                <button onClick={() => navigate(`/profile/${team.id}`)} className={"botonHomo"}>Ver
-                                    Perfil
-                                </button>
-                            </div>
-                        )
-                    }
-                })}
-            <button onClick={handleBack}>
-                <MdOutlineKeyboardBackspace size={24}/>
-            </button>
+            {currentTeam && (
+                <div key={currentTeam.id} className="team-card">
+                    <h2>{currentIndex + 1}. {currentTeam.name}(tú)<br/> <FaTrophy/> {currentTeam.elo}</h2>
+                    <button onClick={() => navigate(`/profile`)} className={"botonHomo"}>Ver Perfil
+                    </button>
+                </div>
+            )}
+            {!currentTeam && (filterRanking(ranking).length === 0 || filterRanking(ranking).every(item => Object.keys(item.team).length === 0)) ? (
+                <p>No se encontraron equipos.</p>
+            ) : (
+                filterRanking(ranking).filter(item => item && item.team !== currentTeam && Object.keys(item.team).length !== 0).map(({
+                                                                                                                                         team,
+                                                                                                                                         index
+                                                                                                                                     }) => (
+                    <div key={team.id} className="team-card">
+                        <h2>{index + 1}. {team.name}<br/> <FaTrophy/> {team.elo}</h2>
+                        <button onClick={() => navigate(`/profile/${team.id}`)} className={"botonHomo"}>Ver
+                            Perfil
+                        </button>
+                    </div>
+                ))
+            )}
         </div>
-
     )
 }
 

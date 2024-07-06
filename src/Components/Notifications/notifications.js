@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {useLocation, useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import {MdOutlineKeyboardBackspace} from "react-icons/md";
 import './notifications.css';
+
 function Notifications() {
     const navigate = useNavigate();
     const [notifications, setNotifications] = useState([]);
-    const location = useLocation();
 
     async function getNotifications() {
         const token = localStorage.getItem('token');
@@ -103,48 +103,50 @@ function Notifications() {
     return (
         <div>
             <div className="container">
-            <h1>Notificaciones</h1>
-            {[...notifications].reverse().map(notification => {
-                if (notification.responded === false) {
-                    if (notification.match.status !== 'PENDING' && notification.message.includes('iniciado')) {
-                        return null;
-                    }
-                    if (notification.match.status !== 'PENDING' && notification.message.includes('Informar')) {
-                        return (
+                <div className="ranking-header">
+                    <button className="back-button2" onClick={() => navigate('/home')}>
+                        <MdOutlineKeyboardBackspace size={24}/>
+                    </button>
+                    <h1 className="title">Notificaciones</h1>
+                </div>
+                {[...notifications].reverse().map(notification => {
+                    if (notification.responded === false) {
+                        if (notification.match.status !== 'PENDING' && notification.message.includes('iniciado')) {
+                            return null;
+                        }
+                        if (notification.match.status !== 'PENDING' && notification.message.includes('Informar')) {
+                            return (
+                                <div key={notification.id} className="notification-card">
+                                    <p>{notification.message}</p>
+                                    <button onClick={async () => {
+                                        navigate('/form', {state: {notification}});
+                                    }}>Informar resultado
+                                    </button>
+                                    <button onClick={() => matchCanceled(notification)}>Partido
+                                        cancelado
+                                    </button>
+                                </div>
+                            )
+                        } else return (
                             <div key={notification.id} className="notification-card">
-                                <p>{notification.message}</p>
-                                <button onClick={async () => {
-                                    navigate('/form', {state: {notification}});
-                                }}>Informar resultado
-                                </button>
-                                <button onClick={() => matchCanceled(notification)}>Partido
-                                    cancelado
-                                </button>
+                                {notification.match.status === 'PENDING' ? (
+                                    <>
+                                        <p>{notification.message}</p>
+                                        <button
+                                            onClick={() => acceptNotification(notification)}>Aceptar
+                                        </button>
+                                        <button
+                                            onClick={() => rejectNotification(notification)}>Rechazar
+                                        </button>
+                                    </>
+                                ) : (
+                                    <p>{notification.message}</p>
+                                )}
                             </div>
                         )
-                    } else return (
-                        <div key={notification.id} className="notification-card">
-                            {notification.match.status === 'PENDING' ? (
-                                <>
-                                    <p>{notification.message}</p>
-                                    <button
-                                        onClick={() => acceptNotification(notification)}>Aceptar
-                                    </button>
-                                    <button
-                                        onClick={() => rejectNotification(notification)}>Rechazar
-                                    </button>
-                                </>
-                            ) : (
-                                <p>{notification.message}</p>
-                            )}
-                        </div>
-                    )
-                }
-            })}
-            <button onClick={() => navigate('/home')}>
-                <MdOutlineKeyboardBackspace size={24}/>
-            </button>
-        </div>
+                    }
+                })}
+            </div>
         </div>
     )
 }

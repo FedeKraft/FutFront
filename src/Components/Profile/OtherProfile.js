@@ -6,7 +6,6 @@ import './profile.css';
 import {FaStar, FaTrophy} from "react-icons/fa";
 
 
-
 function OtherProfile() {
     const {id} = useParams();
     const navigate = useNavigate();
@@ -90,9 +89,11 @@ function OtherProfile() {
                 </div>
                 
             <br/>
-            <button onClick={() => navigate(`/incidents/${id}`)}>Ver incidentes de este usuario</button>
-            <button onClick={handleMatch}>Solicitar Match</button>
-            <button onClick={() => navigate('/MatchHistory')}>Ver historial de partidos</button>
+                <div className="button-container">
+                    <button className="incidentes" onClick={() => navigate(`/incidents/${id}`)}>Ver incidentes de este usuario</button>
+                    <button className="solicitar-match" onClick={handleMatch}>Solicitar Match</button>
+                    <button className="historial" onClick={() => navigate('/MatchHistory')}>Ver historial de partidos</button>
+                </div>
         </div>
 </div>
 )
