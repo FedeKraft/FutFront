@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import {useNavigate} from 'react-router-dom';
 import './home.css';
 import logo from '../../futmatchLogo.png';
-import { GrTrophy } from 'react-icons/gr';
 import {jwtDecode} from "jwt-decode";
+import {GoChevronDown} from "react-icons/go";
+import {FaTrophy} from "react-icons/fa";
 
 async function getTeams() {
     const token = localStorage.getItem('token');
@@ -42,9 +43,13 @@ function HomePage() {
         getTeams().then(setTeams);
     }, []);
 
-    const handleMenuToggle = () => {
-        setMenuOpen(!menuOpen);
+    const handleMenuOpen = () => {
+        setMenuOpen(true);
     };
+
+    const handleMenuClose = () => {
+        setMenuOpen(false);
+    }
 
     const handleLogout = () => {
         localStorage.removeItem('token');
@@ -62,11 +67,11 @@ function HomePage() {
 
     return (
         <div className="home-container">
-            <header className="home-header">
-                <button className="menu-button" onClick={handleMenuToggle}>☰</button>
-                <img src={logo} alt="Logo" className="logo"/>
-            </header>
+            {!menuOpen && (
+                <button className="menu-button-open" onClick={handleMenuOpen}>☰</button>
+            )}
             <div className={`menu-dropdown ${menuOpen ? 'open' : ''}`}>
+                <button className="menu-button-close" onClick={handleMenuClose}>☰</button>
                 <button onClick={() => navigate('/profile')}>Mi Perfil</button>
                 <button onClick={() => navigate('/notifications')}>Notificaciones</button>
                 <button onClick={() => navigate('/ranking')}>Ranking</button>
@@ -74,16 +79,18 @@ function HomePage() {
                 <button onClick={() => navigate(`/incidents/${id}`)}>Incidentes</button>
                 <button onClick={handleLogout}>Cerrar Sesión</button>
             </div>
+            <img src={logo} alt="Logo" className="logo"/>
             <div className="team-list">
                 <input
                     type="text"
                     placeholder="Buscar equipo"
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
+                    className="bar"
                 />
                 <button onClick={togglePopup}>Filtrar</button>
                 {showPopup && (
-                    <div className="popup">
+                    <div className="filters">
                         <div className="input-container">
                             <select
                                 className="dropdown"
@@ -136,6 +143,7 @@ function HomePage() {
                                 <option value="Vicente López">Vicente López</option>
                                 <option value="Zárate">Zárate</option>
                             </select>
+                            <GoChevronDown className={"dropdown-icon"}/>
                         </div>
                         <div className="input-container">
                             <select
@@ -149,6 +157,7 @@ function HomePage() {
                                 <option value="8">8</option>
                                 <option value="11">11</option>
                             </select>
+                            <GoChevronDown className={"dropdown-icon"}/>
                         </div>
                         <div className="input-container">
                             <select
@@ -163,6 +172,7 @@ function HomePage() {
                                 <option value="4">4 star</option>
                                 <option value="5">5 star</option>
                             </select>
+                            <GoChevronDown className={"dropdown-icon"}/>
                         </div>
                     </div>
                 )}
@@ -175,9 +185,9 @@ function HomePage() {
                                 <h2>{team.name}</h2>
                                 <p className="team-city">{team.city}</p>
                             </div>
-                            <div className="team-elo-container">
-                                <GrTrophy className="trophy-icon" />
-                                <p className="team-elo">{team.elo}</p>
+                            <div className="team-elo">
+                                <FaTrophy className="trophy-icon"/>
+                                <p>{team.elo}</p>
                             </div>
                         </div>
                     ))

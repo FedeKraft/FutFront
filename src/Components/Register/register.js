@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './register.css';
-import logo from '../../todo.png';
+import logo from '../../futmatchLogo.png';
+import { GoChevronDown } from "react-icons/go";
 
 function Register() {
     const [name, setName] = useState('');
@@ -134,8 +135,8 @@ function Register() {
                         <option value="Tres de Febrero">Tres de Febrero</option>
                         <option value="Vicente López">Vicente López</option>
                         <option value="Zárate">Zárate</option>
-
                     </select>
+                    <GoChevronDown className={"dropdown-icon"} />
                 </div>
                 <div className="input-container">
                     <select
@@ -150,6 +151,7 @@ function Register() {
                         <option value="8">8</option>
                         <option value="11">11</option>
                     </select>
+                    <GoChevronDown className={"dropdown-icon"} />
                 </div>
                 <button type="submit">Registrarse</button>
             </form>

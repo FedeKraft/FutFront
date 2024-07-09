@@ -17,7 +17,7 @@ body {
     padding: 2rem;
     border-radius: 20px;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-    width: 100%;
+    width: 100vw;
     max-width: 400px;
     text-align: center;
     margin: auto;
@@ -31,9 +31,10 @@ body {
 }
 
 .logo {
-    max-width: 150%;
+    width: auto;
+    max-width: 100%;
     height: auto;
-    max-height: 80px; /* Ajustar la altura máxima del logo */
+    max-height: 90px; /* Ajustar la altura máxima del logo */
     align-content: center;
 }
 
@@ -49,12 +50,6 @@ form {
     flex-direction: column;
     align-items: center;
     width: 100%;
-}
-
-.input-container {
-    position: relative;
-    width: 100%;
-    margin-bottom: 1rem;
 }
 
 input[type="email"],
