@@ -48,7 +48,7 @@ function App() {
                             <Route path="/ranking" element={<Ranking/>}/>
                             <Route path={"/MatchHistory"} element={<MatchHistory/>}/>
                             <Route path={"/incidents/:id"} element={<Incidents/>}/>
-                            <Route path={"/ForgotPassword"} element={<ForgotPassword/>}/>
+                            <Route path={"/forgotPassword"} element={<ForgotPassword/>}/>
                             <Route path="/resetPassword" element={<ResetPassword />} />
                             <Route path="/congratsPage" element={<CongratsPage/>}/>
                         </Route>

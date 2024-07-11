@@ -1,0 +1,34 @@
+.congrats-container {
+    position: absolute;
+    top: 47%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin-top: 70px;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    text-align: center;
+    width: 80%;
+    padding: 15px;
+    box-sizing: border-box;
+    border: none; /* Elimina el borde */
+    border-radius: 5px; /* Añade puntas más redondeadas */
+    background-color: rgba(198, 199, 198, 0.98); /* Cambia el color de fondo a gris claro */
+}
+
+.match-details {
+    font-size: 2rem;
+    color: #000000;
+    text-align: center;
+}
+
+.contact-info {
+    margin-top: 50px;
+    font-size: 1.5rem;
+}
+
+.contact-number {
+    font-size: 1.5rem;
+    color: #333;
+}

@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {MdOutlineKeyboardBackspace} from "react-icons/md";
 import './notifications.css';
+import {toast, ToastContainer} from "react-toastify";
 
 function Notifications() {
     const navigate = useNavigate();
@@ -70,9 +71,17 @@ function Notifications() {
 
     async function matchCanceled(notification) {
         const token = localStorage.getItem('token');
-        const userConfirmation = window.confirm('¿Estás seguro de que quieres reportar el match como cancelado?');
-        if (userConfirmation) {
-            const response = await fetch(`http://localhost:8080/api/notifications/responded`, {
+        toast.info("Partido cancelado", {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            style: {width: 'auto', maxWidth: '800px', whiteSpace: 'nowrap', textAlign: 'center', fontSize: '18px'}
+        });
+        const response = await fetch(`http://localhost:8080/api/notifications/responded`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -81,18 +90,16 @@ function Notifications() {
                 body: JSON.stringify({
                     notificationId: notification.id
                 })
+        });
+        if (response.ok) {
+            // Vuelve a obtener las notificaciones
+            getNotifications().then(notifications => {
+                setNotifications(notifications);
             });
-            if (response.ok) {
-                // Vuelve a obtener las notificaciones
-                getNotifications().then(notifications => {
-                    setNotifications(notifications);
-                });
-            } else {
-                console.error('Error al cancelar el partido');
-            }
+        } else {
+            console.error('Error al cancelar el partido');
         }
     }
-
 
     useEffect(() => {
         getNotifications().then(notifications => {
@@ -103,11 +110,12 @@ function Notifications() {
     return (
         <div>
             <div className="home-container">
+                <ToastContainer/>
                 <button className="back-button" onClick={() => navigate('/home')}>
                     <MdOutlineKeyboardBackspace size={30}/>
                 </button>
                 <h1 className="title">Notificaciones</h1>
-                {[...notifications].reverse().map(notification => {
+                {[...notifications].sort((a, b) => b.id - a.id).map(notification => {
                     if (notification.responded === false) {
                         if (notification.match.status !== 'PENDING' && notification.message.includes('iniciado')) {
                             return null;

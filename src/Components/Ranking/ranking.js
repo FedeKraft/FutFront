@@ -82,7 +82,7 @@ function Ranking() {
                 <MdOutlineKeyboardBackspace size={30}/></button>
             <div className="ranking-title">
                 <h1 className="header">Ranking</h1>
-                <GiTrophyCup size={50} className="trophy"/>
+                <GiTrophyCup size={55} className="trophy"/>
             </div>
             <div className="team-list">
                 <input

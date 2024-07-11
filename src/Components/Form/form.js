@@ -81,15 +81,15 @@ function Form() {
                 <label className="change">
                     ¿Como fue tu experiencia con el rival?
                     <div className="rating">
-                        <input type="radio" name="star" id="1star" onChange={() => setFairPlay("1")}/>
+                        <input type="radio" name="star" id="1star" onChange={() => setFairPlay("5")}/>
                         <label htmlFor="1star"></label>
-                        <input type="radio" name="star" id="2star" onChange={() => setFairPlay("2")}/>
+                        <input type="radio" name="star" id="2star" onChange={() => setFairPlay("4")}/>
                         <label htmlFor="2star"></label>
                         <input type="radio" name="star" id="3star" onChange={() => setFairPlay("3")}/>
                         <label htmlFor="3star"></label>
-                        <input type="radio" name="star" id="4star" onChange={() => setFairPlay("4")}/>
+                        <input type="radio" name="star" id="4star" onChange={() => setFairPlay("2")}/>
                         <label htmlFor="4star"></label>
-                        <input type="radio" name="star" id="5star" onChange={() => setFairPlay("5")}/>
+                        <input type="radio" name="star" id="5star" onChange={() => setFairPlay("1")}/>
                         <label htmlFor="5star"></label>
                     </div>
                 </label>
