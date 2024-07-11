@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './login.css';
 import logo from '../../futmatchLogo.png';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Login() {
     const [email, setEmail] = useState('');
@@ -29,9 +31,18 @@ function Login() {
                 navigate('/home', { replace: true });
             } else {
                 console.error('Credenciales inválidas');
-
                 setEmail('');
                 setPassword('');
+                toast.error('Credenciales invalidas', {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    style: {width: 'auto', maxWidth: '800px', whiteSpace: 'nowrap', textAlign: 'center', fontSize: '18px'}
+                });
             }
         } catch (error) {
             console.error('Error de red', error);
