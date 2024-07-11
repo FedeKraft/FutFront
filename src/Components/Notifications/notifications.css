@@ -16,34 +16,22 @@
     color: black; /* Texto en blanco para mejor contraste con fondo negro */
     font-size: 16px;
     text-align: center;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 }
 
 .notification-card button {
     padding: 8px 16px;
-    margin-top: 5px;
     background-color: #004d00; /* Manteniendo el color de los botones */
     color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     font-weight: bold;
+    width: 80%;
+    margin: 5px;
 }
 
 .notification-card button:hover {
-    background-color: #002900; /* Oscurecer al pasar el ratón para mantener consistencia */
+    background: #218838;
 }
 
-.back-button4 {
-    position: absolute;
-    top: 30px;
-    left: 30px;
-    text-align: left;
-    width: 10%;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-}
-.notification-card2{
-
-}

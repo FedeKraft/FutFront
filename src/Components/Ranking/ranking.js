@@ -5,6 +5,7 @@ import {MdOutlineKeyboardBackspace} from "react-icons/md";
 import './../Ranking/ranking.css';
 import {FaTrophy} from "react-icons/fa";
 import {GoChevronDown} from "react-icons/go";
+import {GiTrophyCup} from "react-icons/gi";
 
 async function getRanking() {
     const token = localStorage.getItem('token');
@@ -77,11 +78,11 @@ function Ranking() {
 
     return (
         <div className={"home-container"}>
-            <div className="ranking-header">
-                <button className="back-button3" onClick={handleBack}>
-                    <MdOutlineKeyboardBackspace size={24}/>
-                </button>
-                <h1 className="title">Ranking</h1>
+            <button className="back-button" onClick={handleBack}>
+                <MdOutlineKeyboardBackspace size={30}/></button>
+            <div className="ranking-title">
+                <h1 className="header">Ranking</h1>
+                <GiTrophyCup size={50} className="trophy"/>
             </div>
             <div className="team-list">
                 <input
@@ -180,24 +181,23 @@ function Ranking() {
                     </div>
                 )}
                 {currentTeam && (
-                    <div key={currentTeam.id} className="team-card">
-                        <h2>{currentIndex + 1}. {currentTeam.name}(tú)<br/> <FaTrophy/> {currentTeam.elo}</h2>
-                        <button onClick={() => navigate(`/profile`)} className={"botonHomo"}>Ver Perfil
-                        </button>
+                    <div key={currentTeam.id} className="team-card" onClick={() => navigate(`/profile`)}>
+                        <h2 className="team-index">{currentIndex + 1}.</h2>
+                        <h2 className="team-name">{currentTeam.name} (Tú)</h2>
+                        <div className="team-elo">
+                            <FaTrophy className="trophy-icon"/>
+                            <p>{currentTeam.elo}</p>
+                        </div>
                     </div>
                 )}
                 {!currentTeam && (filterRanking(ranking).length === 0 || filterRanking(ranking).every(item => Object.keys(item.team).length === 0)) ? (
                     <p>No se encontraron equipos.</p>
                 ) : (
-                    filterRanking(ranking).filter(item => item && item.team !== currentTeam && Object.keys(item.team).length !== 0).map(({
-                                                                                                                                             team,
-                                                                                                                                             index
-                                                                                                                                         }) => (
-                        <div key={team.id} className="team-card" onClick={() => navigate(`/profile/${team.id}`)}>
-                            <div className="rank-info">
-                                <h2 className="team-index">{index + 1}.</h2>
-                                <h2 className="team-name">{team.name}</h2>
-                            </div>
+                    filterRanking(ranking).filter(item => item && item.team !== currentTeam && Object.keys(item.team).length !== 0)
+                        .map(({team, index}) => (
+                            <div key={team.id} className="team-card" onClick={() => navigate(`/profile/${team.id}`)}>
+                            <h2 className="team-index">{index + 1}.</h2>
+                            <h2 className="team-name">{team.name}</h2>
                             <div className="team-elo">
                                 <FaTrophy className="trophy-icon"/>
                                 <p>{team.elo}</p>

@@ -67,6 +67,7 @@ function HomePage() {
 
     return (
         <div className="home-container">
+            <img src={logo} alt="Logo" className="logo-home"/>
             {!menuOpen && (
                 <button className="menu-button-open" onClick={handleMenuOpen}>☰</button>
             )}
@@ -79,7 +80,6 @@ function HomePage() {
                 <button onClick={() => navigate(`/incidents/${id}`)}>Incidentes</button>
                 <button onClick={handleLogout}>Cerrar Sesión</button>
             </div>
-            <img src={logo} alt="Logo" className="logo"/>
             <div className="team-list">
                 <input
                     type="text"

@@ -102,13 +102,11 @@ function Notifications() {
 
     return (
         <div>
-            <div className="container">
-                <div className="ranking-header">
-                    <button className="back-button2" onClick={() => navigate('/home')}>
-                        <MdOutlineKeyboardBackspace size={24}/>
-                    </button>
-                    <h1 className="title">Notificaciones</h1>
-                </div>
+            <div className="home-container">
+                <button className="back-button" onClick={() => navigate('/home')}>
+                    <MdOutlineKeyboardBackspace size={30}/>
+                </button>
+                <h1 className="title">Notificaciones</h1>
                 {[...notifications].reverse().map(notification => {
                     if (notification.responded === false) {
                         if (notification.match.status !== 'PENDING' && notification.message.includes('iniciado')) {

@@ -65,21 +65,30 @@ function OtherProfile() {
     }
 
     return (
-        <div className="container">
-            <div className="profile-header">
-                <button className="back-button2" onClick={handleBack}>
-                    <MdOutlineKeyboardBackspace size={24}/>
-                </button>
-                <h1 className="title">Perfil de {profile.name}</h1>
-            </div>
+        <div className="home-container">
+            <button className="back-button" onClick={handleBack}>
+                <MdOutlineKeyboardBackspace size={30}/>
+            </button>
+            <h1 className="title">Perfil de <br/> {profile.name}</h1>
+            <hr/>
             <div>
-                <p className="kk">Localidad: {profile.city}</p>
-                <p className="kk">Cantidad de jugadores: {profile.playerAmount}</p>
-                <div className="elo">
-                    <p className="kk"><FaTrophy/> {profile.elo}</p>
+                <div className="line">
+                    <p className="kk">Localidad:</p>
+                    <p className="kk">{profile.city}</p>
                 </div>
-                <div className="stars">
-                    <span className="kk">Fairplay:</span>
+                <div className="line">
+                    <p className="kk">Cantidad de jugadores:</p>
+                    <p className="kk">{profile.playerAmount}</p>
+                </div>
+                <div className="line">
+                    <p className="kk">Elo:</p>
+                    <div className="elo">
+                        <FaTrophy size={15} className="trof"/>
+                        <p className="kk">{profile.elo}</p>
+                    </div>
+                </div>
+                <div className="line">
+                    <p className="kk">Fairplay:</p>
                     <div className="star-container">
                         {[...Array(5)].map((_, i) => i < Number(profile.stars) ?
                             <FaStar key={i} color="#FFD700" size={20}/> :
@@ -87,17 +96,19 @@ function OtherProfile() {
                         )}
                     </div>
                 </div>
-                
-            <br/>
-                <div className="button-container">
-                    <button className="incidentes" onClick={() => navigate(`/incidents/${id}`)}>Ver incidentes de este usuario</button>
+                <hr className="separation"/>
+                <div className="profile-buttons">
+                    <button className="incidentes" onClick={() => navigate(`/incidents/${id}`)}>Ver incidentes de este
+                        usuario
+                    </button>
+                    <button className="historial" onClick={() => navigate('/MatchHistory')}>Ver historial de partidos
+                    </button>
                     <button className="solicitar-match" onClick={handleMatch}>Solicitar Match</button>
-                    <button className="historial" onClick={() => navigate('/MatchHistory')}>Ver historial de partidos</button>
                 </div>
+            </div>
         </div>
-</div>
-)
-    ;
+    )
+        ;
 }
 
 export default OtherProfile;

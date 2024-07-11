@@ -50,15 +50,16 @@ function History(){
         getHistory().then(setHistory);
     }, []);
     return (
-        <div className="container">
-            <button className="back-button2" onClick={handleBack}>
-                <MdOutlineKeyboardBackspace size={24}/>
+        <div className="home-container">
+            <button className="back-button" onClick={handleBack}>
+                <MdOutlineKeyboardBackspace size={30}/>
             </button>
             <h1 className="title">Historial de Partidos</h1>
             {history.map((match) => (
                 <button key={match.id} className="match-container" onClick={() => navigate(`/profile/${getOpponentId(match)}`)}>
-                    {match.fromUser.name} ({match.fromUserForm.goalsInFavor}) -
-                    ({match.toUserForm.goalsInFavor}) {match.toUser.name}
+                    <span className="history-name">{match.fromUser.name}</span>
+                    <span className="result">({match.fromUserForm.goalsInFavor}) - ({match.toUserForm.goalsInFavor})</span>
+                    <span className="history-name2">{match.toUser.name}</span>
                 </button>
             ))}
         </div>
