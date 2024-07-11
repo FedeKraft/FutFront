@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
-import { jwtDecode } from 'jwt-decode';
 import { MdOutlineKeyboardBackspace } from "react-icons/md";
 import './profile.css';
-import {FaStar, FaTrophy} from "react-icons/fa";
-
+import { FaStar, FaTrophy } from "react-icons/fa";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { jwtDecode } from 'jwt-decode';
 
 function OtherProfile() {
-    const {id} = useParams();
+    const { id } = useParams();
     const navigate = useNavigate();
     const location = useLocation();
     const [profile, setProfile] = useState(null);
@@ -18,6 +19,7 @@ function OtherProfile() {
             navigate(-1);
         }
     }
+
     useEffect(() => {
         const fetchProfile = async () => {
             const token = localStorage.getItem('token');
@@ -54,9 +56,28 @@ function OtherProfile() {
             })
         });
         if (response.ok) {
-            alert('Match solicitado');
+            toast.success('Match solicitado', {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                style: { width: 'auto', maxWidth: '600px', whiteSpace: 'nowrap', textAlign: 'center', fontSize: '18px' }
+            });
+
         } else {
-            alert('Ya has solicitado un match con este usuario y está pendiente de respuesta.');
+            toast.error('Ya has solicitado un match', {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                style: {width: 'auto', maxWidth: '800px', whiteSpace: 'nowrap', textAlign: 'center', fontSize: '18px'}
+            });
         }
     };
 
@@ -66,11 +87,12 @@ function OtherProfile() {
 
     return (
         <div className="home-container">
+            <ToastContainer /> {/* Aquí se incluye ToastContainer */}
             <button className="back-button" onClick={handleBack}>
-                <MdOutlineKeyboardBackspace size={30}/>
+                <MdOutlineKeyboardBackspace size={30} />
             </button>
-            <h1 className="title">Perfil de <br/> {profile.name}</h1>
-            <hr/>
+            <h1 className="title">Perfil de <br /> {profile.name}</h1>
+            <hr />
             <div>
                 <div className="line">
                     <p className="kk">Localidad:</p>
@@ -83,7 +105,7 @@ function OtherProfile() {
                 <div className="line">
                     <p className="kk">Elo:</p>
                     <div className="elo">
-                        <FaTrophy size={15} className="trof"/>
+                        <FaTrophy size={15} className="trof" />
                         <p className="kk">{profile.elo}</p>
                     </div>
                 </div>
@@ -91,12 +113,12 @@ function OtherProfile() {
                     <p className="kk">Fairplay:</p>
                     <div className="star-container">
                         {[...Array(5)].map((_, i) => i < Number(profile.stars) ?
-                            <FaStar key={i} color="#FFD700" size={20}/> :
-                            <FaStar key={i} color="#D3D3D3" size={20}/> // color gris para estrellas vacías
+                            <FaStar key={i} color="#FFD700" size={20} /> :
+                            <FaStar key={i} color="#D3D3D3" size={20} /> // color gris para estrellas vacías
                         )}
                     </div>
                 </div>
-                <hr className="separation"/>
+                <hr className="separation" />
                 <div className="profile-buttons">
                     <button className="incidentes" onClick={() => navigate(`/incidents/${id}`)}>Ver incidentes de este
                         usuario
@@ -107,8 +129,7 @@ function OtherProfile() {
                 </div>
             </div>
         </div>
-    )
-        ;
+    );
 }
 
 export default OtherProfile;

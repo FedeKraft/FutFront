@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import './register.css';
 import logo from '../../futmatchLogo.png';
 import { GoChevronDown } from "react-icons/go";
+import {toast} from "react-toastify";
+import {wait} from "@testing-library/user-event/dist/utils";
 
 function Register() {
     const [name, setName] = useState('');
@@ -25,6 +27,16 @@ function Register() {
             });
             if (response.ok) {
                 console.log('Usuario registrado con éxito');
+                toast.success('Registro exitoso', {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    style: { width: 'auto', maxWidth: '600px', whiteSpace: 'nowrap', textAlign: 'center', fontSize: '18px' }
+                });
                 setName('');
                 setEmail('');
                 setPassword('');
