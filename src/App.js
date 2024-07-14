@@ -16,6 +16,7 @@ import CongratsPage from "./Components/CongratsPage/congratsPage";
 
 import {BrowserRouter, Navigate, Outlet, Route, Routes} from "react-router-dom";
 import {jwtDecode} from "jwt-decode";
+import AdminHome from "./Components/Home/adminHome";
 
 function Auth() {
     const token = localStorage.getItem('token');
@@ -38,6 +39,7 @@ function App() {
                         <Route path="/" element={<Navigate to="/login" />} />
                         <Route path="/login" element={<Login/>}/>
                         <Route path="/register" element={<Register/>}/>
+                        <Route path="/adminHome" element={<AdminHome/>}/>
                         <Route element={<Auth/>} >
                             <Route path={"/home"} element={<HomePage/>}/>
                             <Route path={"/profile"} element={<Profile/>}/>

@@ -16,6 +16,12 @@ function Login() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+            // Verificar si las credenciales ingresadas corresponden a un administrador
+            if (email === 'admin@admin.com' && password === 'admin') {
+                navigate('/adminHome');
+                return;
+            }
+
             const response = await fetch('http://localhost:8080/auth/login', {
                 method: 'POST',
                 headers: {
