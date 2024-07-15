@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import './login.css';
 import logo from '../../futmatchLogo.png';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Link } from 'react-router-dom';
+import { useGoogleLogin } from '@react-oauth/google';
+import axios from "axios";
 
 
 function Login() {
@@ -12,6 +14,8 @@ function Login() {
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
+    const [ user, setUser ] = useState([]);
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -29,7 +33,6 @@ function Login() {
                 localStorage.setItem('token', res.token);
                 setEmail('');
                 setPassword('');
-                navigate('/home');
                 navigate('/home', { replace: true });
             } else {
                 toast.error('Credenciales invalidas', {
@@ -51,16 +54,79 @@ function Login() {
         }
     };
 
+    async function handleGoogleLogin(googleEmail, googlePassword) {
+        try {
+            const res = await fetch('http://localhost:8080/auth/googleLogin', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email: googleEmail,
+                    password: googlePassword }),
+            });
+
+            if (res.ok) {
+                const data = await res.json();
+                if (data.userExists) {
+                    localStorage.setItem('token', data.token.token);
+                    console.log(localStorage.getItem('token'));
+                    setEmail('');
+                    setPassword('');
+                    navigate('/home', { replace: true });
+                } else {
+                    localStorage.setItem('email', googleEmail);
+                    localStorage.setItem('password', googlePassword);
+                    navigate('/googleRegister');                }
+            } else {
+                console.error('Error during Google login');
+            }
+        } catch (error) {
+            console.error('Network error', error);
+        }
+    }
+
+    const googleLogin = useGoogleLogin({
+        onSuccess: (codeResponse) => setUser(codeResponse),
+        onError: (error) => console.log('Login Failed:', error)
+    });
+
+    useEffect(
+        () => {
+            if (user) {
+                axios
+                    .get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
+                        headers: {
+                            Authorization: `Bearer ${user.access_token}`,
+                            Accept: 'application/json'
+                        }
+                    })
+                    .then((res) => {
+                        handleGoogleLogin(res.data.email, res.data.id);
+                    })
+                    .catch((err) => console.log(err));
+            }
+        },
+        [ user ]
+    );
+
+    useEffect(() => {
+        if (localStorage.getItem('token')) {
+            navigate('/home', { replace: true });
+        }
+    }, []);
+
+
     return (
         <>
             <ToastContainer /> {/* Aquí se incluye ToastContainer */}
             <div className="container">
                 <div className="logo-container">
-                    <img src={logo} alt="Logo" className="logo" />
+                    <img src={logo} alt="Logo" className="logo"/>
                 </div>
-                <hr />
+                <hr/>
                 <h2>Inicio de sesión</h2>
-                <hr />
+                <hr className="first-line"/>
                 <form onSubmit={handleSubmit}>
                     <div className="input-container">
                         <input
@@ -71,9 +137,8 @@ function Login() {
                             required
                         />
                     </div>
-                    <hr />
+                    <hr/>
                     <div className="input-container">
-
                         <input
                             type={showPassword ? 'text' : 'password'}
                             placeholder="Contraseña"
@@ -88,14 +153,22 @@ function Login() {
                             {showPassword ? 'Ocultar' : 'Mostrar'}
                         </span>
                     </div>
-                    <hr />
+                    <hr/>
                     <button type="submit">Iniciar sesión</button>
-                    <button onClick={() => navigate('/register')} className="register-button">Registrarse</button>
+                    <button onClick={() => navigate('/register')}>Registrarse</button>
                 </form>
-                <hr />
                 <div className="forgot-password">
                     <Link to="/forgotPassword">¿Olvidaste tu contraseña?</Link>
                 </div>
+                <div className="line-with-text">
+                    <hr/>
+                    <span>O</span>
+                    <hr/>
+                </div>
+                <button onClick={googleLogin} className="google-login-button">
+                    <img src="https://www.svgrepo.com/show/475656/google-color.svg" loading="lazy" alt="google logo"/>
+                    <span>Iniciar sesión con Google</span>
+                </button>
             </div>
         </>
     );

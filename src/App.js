@@ -1,5 +1,6 @@
 import './App.css';
 import Register from './Components/Register/register';
+import GoogleRegister from "./Components/Register/googleRegister";
 import Login from './Components/Login/login';
 import HomePage from './Components/Home/home';
 import Profile from './Components/Profile/profile';
@@ -16,6 +17,7 @@ import CongratsPage from "./Components/CongratsPage/congratsPage";
 
 import {BrowserRouter, Navigate, Outlet, Route, Routes} from "react-router-dom";
 import {jwtDecode} from "jwt-decode";
+
 
 function Auth() {
     const token = localStorage.getItem('token');
@@ -38,6 +40,7 @@ function App() {
                         <Route path="/" element={<Navigate to="/login" />} />
                         <Route path="/login" element={<Login/>}/>
                         <Route path="/register" element={<Register/>}/>
+                        <Route path="/googleRegister" element={<GoogleRegister/>}/>
                         <Route element={<Auth/>} >
                             <Route path={"/home"} element={<HomePage/>}/>
                             <Route path={"/profile"} element={<Profile/>}/>

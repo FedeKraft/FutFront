@@ -99,11 +99,51 @@ button:hover {
     text-decoration: underline;
 }
 
-.register-button {
-    margin-top: 1rem;
-    width: 100%;
+.line-with-text {
+    display: flex;
+    align-items: center;
     text-align: center;
-    background-color: #004d00;
+    color: #000;
+    margin-top: 30px;
+}
+
+.line-with-text hr {
+    flex-grow: 1;
+}
+
+.line-with-text span {
+    margin: 0 10px;
+}
+
+.first-line {
+    margin-bottom: 20px;
+}
+
+.google-login-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(45, 55, 72, 0.37);
+    padding: 0.6rem;
+    border-radius: 0.375rem;
+    color: #2d3748;
+    transition: all 0.15s ease-in-out;
+    margin-top: 30px;
+    background: #ffffff;
+    font-size: medium;
+}
+
+.google-login-button:hover {
+    background: #ffffff;
+    border-color: #718096;
+    color: #1a202c;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+
+.google-login-button img {
+    margin-right: 10px;
+    width: 24px;
+    height: 24px;
 }
 
 
