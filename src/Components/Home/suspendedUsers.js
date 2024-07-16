@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import './home.css';
 import {MdOutlineKeyboardBackspace} from "react-icons/md";
 import {useLocation, useNavigate} from "react-router-dom";
+import {toast} from "react-toastify";
 function SuspendedUsers() {
     const navigate = useNavigate();
     const location = useLocation();
@@ -43,6 +44,7 @@ function SuspendedUsers() {
         if (response.ok) {
             const updatedSuspended = await getSuspended();
             setSuspended(updatedSuspended);
+
         } else {
             console.error('Error al activar el equipo');
         }
@@ -59,7 +61,7 @@ function SuspendedUsers() {
             </button>
             <h1 className="title">Equipos suspendidos</h1>
             {suspended.length === 0 ? (
-                <p className="no-incidents">No hay incidentes.</p>
+                <p className="no-incidents">No hay equipos suspendidos.</p>
             ) : (
                 suspended.map((sus) => (
                     <div className="incidents">

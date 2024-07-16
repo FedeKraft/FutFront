@@ -60,8 +60,16 @@ function Notifications() {
             })
         });
         if (response.ok) {
-            alert('Match rechazado')
-            // Crea un arreglo con las notificaciones que no sean la notificación aceptada
+            toast.info("Match rechazado", {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                style: {width: 'auto', maxWidth: '800px', whiteSpace: 'nowrap', textAlign: 'center', fontSize: '18px'}
+            });            // Crea un arreglo con las notificaciones que no sean la notificación aceptada
             const newNotifications = notifications.filter(n => n.id !== notification.id);
             setNotifications(newNotifications);
         } else {

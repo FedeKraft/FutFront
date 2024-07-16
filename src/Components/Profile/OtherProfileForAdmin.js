@@ -33,7 +33,6 @@ function OtherProfileForAdmin() {
                 progress: undefined,
                 style: { width: 'auto', maxWidth: '600px', whiteSpace: 'nowrap', textAlign: 'center', fontSize: '18px' }
             });
-            navigate('/adminHome');
         } else {
             console.error('Error');
         }
