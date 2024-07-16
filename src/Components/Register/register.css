@@ -10,23 +10,6 @@ body {
     height: 100vh;
     padding: 20px;
     box-sizing: border-box;
-
-}
-
-.container {
-    background-color: #f5f5f5;
-    padding: 2rem;
-    padding-top: 3rem;
-    padding-bottom: 3rem;
-    border-radius: 20px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-    width: 90%;
-    max-width: 400px;
-    text-align: center;
-    margin: auto;
-    box-sizing: border-box;
-    overflow-y: auto;
-    height: 100vh;
 }
 
 .logo-container {
@@ -35,17 +18,17 @@ body {
     justify-content: center;
 }
 
-.logo {
-    max-width: 100%;
-    height: auto;
-    max-height: 80px;
-}
-
 h2 {
     color: #333;
     margin-bottom: 1.5rem;
     font-size: 1.5rem;
     font-weight: 500;
+}
+
+h3 {
+    color: rgba(0, 0, 0, 0.85);
+    font-size: 1rem;
+    margin: 0;
 }
 
 form {
@@ -58,7 +41,7 @@ form {
 .input-container {
     position: relative;
     width: 100%;
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.5rem;
 }
 
 input[type="text"],
@@ -87,35 +70,21 @@ input[type="number"]::-webkit-inner-spin-button {
     margin: 0; /* Remove the spinner in Chrome and Safari */
 }
 
-button {
-    padding: 0.75rem;
-    border: none;
-    border-radius: 5px;
-    background: #28a745;
-    color: white;
-    font-size: 1rem;
-    cursor: pointer;
+.register-button {
+    margin-top: 20px;
     width: 100%;
-    margin-bottom: 1rem;
-    transition: background 0.3s ease, transform 0.3s ease;
-}
-
-button:hover {
-    background: #218838;
-    transform: translateY(-2px);
+    text-align: center;
+    background-color: #004d00;
 }
 
 .return-button {
-    margin-top: 1rem;
+    margin-top: 0.1rem;
     width: 100%;
     text-align: center;
-}
-
-.return-button button {
     background-color: #6c757d;
 }
 
-.return-button button:hover {
+.return-button:hover {
     background-color: #5a6268;
 }
 
@@ -128,49 +97,18 @@ button:hover {
     box-sizing: border-box;
 }
 
-/* Media queries */
-@media (min-width: 768px) {
-    .container {
-        padding: 3rem;
-    }
-
-    h2 {
-        font-size: 2rem;
-    }
-
-    input[type="text"],
-    input[type="email"],
-    input[type="password"],
-    input[type="number"],
-    select {
-        font-size: 1.0rem;
-    }
-
-    button {
-        font-size: 1.25rem;
+@media screen and (max-width: 375px) {
+    .dropdown {
+        font-size: 0.8rem;
     }
 }
 
-@media (min-width: 1024px) {
-    .container {
-        padding: 4rem;
-    }
-
-    h2 {
-        font-size: 2.5rem;
-    }
-
-    input[type="text"],
-    input[type="email"],
-    input[type="password"],
-    input[type="number"],
-    select {
-        font-size: 1.5rem;
-    }
-
-    button {
-        font-size: 1.5rem;
-    }
+.dropdown-icon {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    pointer-events: none; /* Esto hace que el icono sea "clickeable" */
 }
 
 .botonHomo{

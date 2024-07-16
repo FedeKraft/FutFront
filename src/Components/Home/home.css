@@ -13,11 +13,11 @@ body {
 }
 
 .home-container {
-    width: 100%;
-    max-width: 1200px;
-    max-height: 90vh;
+    position: relative;
+    width: 100vw;
+    max-width: 500px;
+    height: 100vh;
     background-color: #f5f5f5;
-    border-radius: 20px;
     padding: 2rem;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
     overflow-y: auto;
@@ -26,32 +26,40 @@ body {
     box-sizing: border-box;
 }
 
-.home-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
-    position: relative;
-
-}
-
-.logo {
-    max-width: 2000px;
-    height: auto;
-}
-
-.menu-button {
+.menu-button-open, .menu-button-close {
+    position: absolute;
+    top: 15px; /* Ajusta este valor para mover el botón verticalmente */
+    left: 15px; /* Ajusta este valor para mover el botón horizontalmente */
+    align-self: flex-start;
     border: none;
-    font-size: 2rem;
+    font-size: 8vw;
     cursor: pointer;
     background-color: #004d00;
     color: white;
     padding: 0.5rem;
     border-radius: 5px;
+    width: 12vw; /* Establece el ancho del botón */
+    height: 12vw; /* Establece la altura del botón */
+    max-width: 50px;
+    max-height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@media screen and (min-width: 400px) {
+    .menu-button-open, .menu-button-close {
+        font-size: 35px; /* Tamaño máximo de fuente */
+    }
+}
+
+.menu-button-close {
+    position: absolute;
+    left: 90%;
 }
 
 .menu-dropdown {
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     height: 100%;
@@ -59,16 +67,17 @@ body {
     background-color: #004d00;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
     padding: 1rem;
-    transform: translateX(-100%);
+    transform: translateX(-110%);
     transition: transform 0.3s ease;
     z-index: 1000;
 }
 
 .menu-dropdown.open {
+    position: absolute;
     transform: translateX(0);
 }
 
-.menu-dropdown button {
+.menu-dropdown button:not(.menu-button-close) {
     display: block;
     width: 100%;
     padding: 1rem;
@@ -84,15 +93,34 @@ body {
     background: #218838;
 }
 
-.team-list {
+.logo-home {
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    max-height: 100px; /* Ajustar la altura máxima del logo */
+}
+
+.bar {
+    width: 100%;
+    padding: 0.5rem;
+    border: none;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.filters {
+    position: relative;
+    width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    align-items: center;
-    width: 100%;
+    justify-content: center;
+    margin-bottom: 1rem;
 }
 
 .team-card {
+    container-type: inline-size;
     background: white;
     padding: 1rem;
     border-radius: 10px;
@@ -103,10 +131,8 @@ body {
     width: 100%;
     box-sizing: border-box;
     margin: 10px 0;
-    gap: 1rem;
     cursor: pointer;
     transition: box-shadow 0.3s ease;
-
 }
 
 .team-card:hover {
@@ -121,7 +147,7 @@ body {
 
 .team-info h2 {
     margin: 0;
-    font-size: 1.5rem;
+    font-size: 2rem;
 }
 
 .team-info .team-city {
@@ -130,55 +156,64 @@ body {
     color: #666;
 }
 
+.team-name {
+    margin: 0;
+    font-size: 2rem;
+    max-width: 75%;
+}
+
 .team-elo {
     font-size: 1.25rem;
     color: #333;
-    margin-left: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
 }
 
-@media (min-width: 768px) {
-    .home-container {
-        padding: 3rem;
-    }
-
-    .team-card {
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .team-info {
-        align-items: flex-start;
-    }
-
-    .team-info h2 {
-        font-size: 2rem;
-    }
-
-    .team-info .team-city {
-        font-size: 1.25rem;
-    }
-
-    .team-elo {
-        font-size: 1.5rem;
-    }
+.report {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 20px;
 }
 
-@media (min-width: 1024px) {
-    .home-container {
-        padding: 4rem;
-    }
-
-    .team-card h2 {
-        font-size: 2.5rem;
-    }
-
-    .team-info .team-city {
-        font-size: 1.5rem;
-    }
-
-    .team-elo {
-        font-size: 1.75rem;
-
-    }
+.incidents span {
+    font-weight: bold;
+    margin-top: 0;
+    color: rgba(0, 0, 0, 0.85);
+    font-size: 1rem;
 }
+
+.report-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 0;
+    width: 100%;
+}
+
+.report-button button {
+    width: auto;
+    margin-bottom: 10px;
+}
+
+.no-reports {
+    margin-top: 50px;
+    font-size: 1.3rem;
+    width: 100%;
+}
+
+.link {
+    color: #007bff;
+    text-decoration: none;
+    font-size: 0.875rem;
+}
+
+.link:hover {
+    text-decoration: underline;
+}
+

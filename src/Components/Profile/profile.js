@@ -1,23 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import jwtDecode from 'jwt-decode';
 import { MdOutlineKeyboardBackspace } from "react-icons/md";
 import './profile.css';
 import { FaTrophy, FaStar } from "react-icons/fa";
 
 function Profile() {
     const [profile, setProfile] = useState({
-        name: 'Boca',
-        email: '2@2.com',
-        city: 'Pilar',
-        playerAmount: '11',
-        number: '123',
-        userStatus: 'ACTIVE',
-        elo: '1000',
-        stars: '5'
+        name: '',
+        email: '',
+        city: '',
+        playerAmount: '',
+        number: '',
+        status: '',
+        elo: '',
+        stars: ''
     });
 
     const location = useLocation();
+    const token = localStorage.getItem('token');
     const navigate = useNavigate();
 
     const handleBack = () => {
@@ -26,13 +26,8 @@ function Profile() {
         }
     }
 
-    const handleLogout = () => {
-        localStorage.removeItem('token');
-        navigate('/login');
-    };
-
     const toggleActiveStatus = async () => {
-        const newStatus = profile.userStatus === 'ACTIVE' ? 'INACTIVE' : 'ACTIVE';
+        const newStatus = profile.status === 'ACTIVE' ? 'INACTIVE' : 'ACTIVE';
 
         try {
             const response = await fetch(`http://localhost:8080/auth/users/toggle-status`, {
@@ -43,7 +38,7 @@ function Profile() {
                 },
             });
             if (response.ok) {
-                const updatedProfile = { ...profile, userStatus: newStatus };
+                const updatedProfile = { ...profile, status: newStatus };
                 setProfile(updatedProfile);
                 localStorage.setItem('profile', JSON.stringify(updatedProfile));
             } else {
@@ -75,30 +70,42 @@ function Profile() {
             }
         };
         fetchData();
-    }, []);
+    }, [token]);
+
 
     return (
-        <div className="container">
-            <button className="back-button2" onClick={handleBack}>
-                <MdOutlineKeyboardBackspace size={24}/>
+        <div className="home-container">
+            <button className="back-button" onClick={handleBack}>
+                <MdOutlineKeyboardBackspace size={30}/>
             </button>
-            <div className="profile-header">
-
-                <h1 className="title">Perfil</h1>
-            </div>
-
+            <h1 className="title">Perfil</h1>
+            <hr/>
             <div>
-                <p className="kk">Nombre de equipo: {profile.name}</p>
-                <p className="kk">Correo electrónico: {profile.email}</p>
-                <p className="kk">Localidad: {profile.city}</p>
-                <p className="kk">Cantidad de jugadores: {profile.playerAmount}</p>
-                <p className="kk">Número de teléfono: {profile.number}</p>
-                <div className="elo">
-                    <p className="kk"><FaTrophy/> {profile.elo}</p>
+                <div className="line">
+                    <p className="kk">Nombre de equipo:</p>
+                    <p className="kk">{profile.name}</p>
                 </div>
-
-                <div className="stars">
-                    <span className="kk">Fairplay:</span>
+                <div className="line">
+                    <p className="kk">Localidad:</p>
+                    <p className="kk">{profile.city}</p>
+                </div>
+                <div className="line">
+                    <p className="kk">Cantidad de jugadores:</p>
+                    <p className="kk">{profile.playerAmount}</p>
+                </div>
+                <div className="line">
+                    <p className="kk">Número de teléfono:</p>
+                    <p className="kk">{profile.number}</p>
+                </div>
+                <div className="line">
+                    <p className="kk">Elo:</p>
+                    <div className="elo">
+                        <FaTrophy size={15} className="trof"/>
+                        <p className="kk">{profile.elo}</p>
+                    </div>
+                </div>
+                <div className="line">
+                    <p className="kk">Fairplay:</p>
                     <div className="star-container">
                         {[...Array(5)].map((_, i) => i < Number(profile.stars) ?
                             <FaStar key={i} color="#FFD700" size={20}/> :
@@ -106,15 +113,15 @@ function Profile() {
                         )}
                     </div>
                 </div>
-                <br/>
-                <button className="edit-button" onClick={() => navigate('/EditProfile')}>Editar</button>
-                <button className={`inactive-button`} onClick={toggleActiveStatus}>
-                    {profile.userStatus === 'ACTIVE' ? 'Activo' : 'Desactivo'}
-                </button>
-                <button className="incidents-button" onClick={() => navigate(`/incidents/${profile.id}`)}>Ver
-                    incidentes
-                </button>
-                <button className="logout-button" onClick={handleLogout}>Cerrar sesión</button>
+                <hr className="separation"/>
+                <div className="line">
+                    <p className="kk">Mostrar tu equipo a otros:</p>
+                    <button onClick={toggleActiveStatus} className={`active-button ${profile.status === 'ACTIVE' ? 'active' : ''}`}>
+                        <div className="thumb"></div>
+                    </button>
+                </div>
+                <hr />
+                <button className="profile-buttons" onClick={() => navigate('/EditProfile')}>Editar</button>
             </div>
         </div>
     );

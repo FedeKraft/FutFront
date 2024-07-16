@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+@import '~@fortawesome/fontawesome-free/css/all.css';
 
 body {
     margin: 0;
@@ -10,16 +11,6 @@ body {
     min-height: 100vh;
     padding: 20px;
     box-sizing: border-box;
-
-}
-.back-button {
-    border: none;
-    font-size: 2rem;
-    cursor: pointer;
-    background-color: #004d00;
-    color: white;
-    padding: 0.5rem;
-    border-radius: 5px;
 }
 
 .form-group {
@@ -40,58 +31,264 @@ body {
     border: 1px solid #ccc;
     box-sizing: border-box;
 }
+
 .title {
     font-size: 2.5rem;
     text-align: center;
+    margin-top: 3rem;
     margin-bottom: 1rem;
 }
 
+.title2 {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.back-button {
+    position: absolute;
+    top: 15px; /* Ajusta este valor para mover el botón verticalmente */
+    left: 15px; /* Ajusta este valor para mover el botón horizontalmente */
+    align-self: flex-start;
+    border: none;
+    font-size: 8vw;
+    cursor: pointer;
+    background-color: #004d00;
+    color: white;
+    padding: 0.5rem;
+    border-radius: 5px;
+    width: 12vw; /* Establece el ancho del botón */
+    height: 12vw; /* Establece la altura del botón */
+    max-width: 50px;
+    max-height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .kk {
-    font-size: 1.25rem;
+    font-size: 1rem;
     margin-bottom: 0.5rem;
     text-align: left;
+}
 
+.line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
-.container {
-    overflow-y: auto;
-    height: 100vh;
-}
-.back-button2{
-    text-align: left;
-    width: 15%;
+
+.elo {
     display: flex;
     align-items: center;
-    justify-content: flex-start;
-}
-.stars {
-    display: flex;
-    align-items: center; /* Alinea verticalmente los elementos */
+    justify-content: center;
+    gap: 10px;
 }
 
-.star-container {
-    margin-left: 20px; /* Espacio entre el texto y las estrellas */
+.star-container, .trof {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
 }
+
+.active-button {
+    background-color: #b7b9ba;
+    border: 1px solid #aaa;
+    border-radius: 99px;
+    width: 50px;
+    height: 28px;
+    transition: background-color 0.1s ease, border-color 0.2s ease;
+    cursor: pointer;
+    box-shadow: 1px 1px 10px rgba(0,0,0,0.748);
+    position: relative;
+    margin-top: 25px;
+}
+
+.active-button .thumb {
+    height: 20px;
+    width: 20px;
+    background-color: #fff;
+    border-radius: 99px;
+    transform: translateX(0);
+    transition: left 0.15s ease;
+    position: absolute;
+    left: 3px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.active-button.active {
+    background-color: #15b58e;
+}
+
+.active-button:hover {
+    border-color: #6f6f6f;
+    background-color: #b7b9ba;
+}
+
+.active-button.active:hover {
+    border-color: #6f6f6f;
+    background-color: #15b58e;
+}
+
+.active-button.active .thumb {
+    left: calc(50px - 25px);
+}
+
+.separation {
+    margin-top: 20px;
+}
+
+.profile-buttons {
+    position: absolute;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+}
+
+.change {
+    margin-top: 2rem;
+    text-align: left;
+    width: 100%;
+}
+
+.input-container2 {
+    position: relative;
+    width: 100%;
+}
+
+.input-container3 {
+    margin-top: 2rem;
+    width: 100%;
+}
+
 .match-container {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 100%;
     background-color: #f0f0f0;
-    padding: 10px 20px;
     margin: 10px 0;
     border-radius: 5px;
     border: none;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     cursor: pointer;
-    text-align: left;
-    font-size: 18px;
+    font-size: 1rem;
     color: #000;
 }
-
 
 .match-container:hover {
     background-color: #e0e0e0;
 }
+
+.history-name {
+    white-space: normal;
+    overflow-wrap: break-word;
+    text-align: left;
+    width: 30%;
+}
+
+.history-name2 {
+    white-space: normal;
+    overflow-wrap: break-word;
+    text-align: right;
+    width: 30%;
+}
+
+.result {
+    position: absolute; /* Añade esto */
+    top: 50%; /* Añade esto */
+    left: 50%; /* Añade esto */
+    transform: translate(-50%, -50%); /* Añade esto */
+    white-space: nowrap;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.incidents {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    padding: 15px;
+    margin: 10px 0;
+    box-sizing: border-box;
+    border: none; /* Elimina el borde */
+    border-radius: 5px; /* Añade puntas más redondeadas */
+    background-color: rgba(199, 198, 198, 0.57); /* Cambia el color de fondo a gris claro */
+}
+
+.incidents h3 {
+    font-weight: bold;
+    margin-bottom: 20px;
+    margin-top: 0;
+}
+
+.incidents p {
+    margin: 0;
+    text-align: left;
+}
+
+.no-incidents {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.3rem;
+    width: 100%;
+}
+
+.rating {
+    transform: rotateY(180deg);
+    display: flex;
+    margin-top: 10px;
+    justify-content: center;
+}
+
+.rating input {
+    display: none;
+}
+
+.rating label {
+    display: block;
+    cursor: pointer;
+    width: 50px;
+}
+
+.rating label:before {
+    content: '\f005';
+    font-family: fontAwesome;
+    position: relative;
+    display: block;
+    font-size: 50px;
+    color: #D3D3D3;
+}
+
+.rating label:after {
+    content: '\f005';
+    font-family: fontAwesome;
+    position: absolute;
+    display: block;
+    font-size: 50px;
+    color: #FFD700;
+    top: 0;
+    opacity: 0;
+    transition: .5s;
+    text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+}
+
+.rating label:hover:after,
+.rating label:hover ~ label:after,
+.rating input:checked ~ label:after
+{
+    opacity: 1;
+}
+
+
 
 
 

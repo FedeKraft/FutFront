@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './../Home/home.css';
+import './../Login/login.css';
+import {toast, ToastContainer} from "react-toastify";
+import logo from "../../futmatchLogo.png";
 
 function ForgotPassword() {
     const [email, setEmail] = useState('');
@@ -17,9 +19,28 @@ function ForgotPassword() {
                 body: JSON.stringify({ email }),
             });
             if (response.ok) {
-                alert('Correo de recuperación enviado');
+                toast.success('Correo de recuperación enviado', {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    style: {width: 'auto', maxWidth: '800px', whiteSpace: 'nowrap', textAlign: 'center', fontSize: '18px'}
+                });
+                setEmail('');
             } else {
-                console.error('Error al enviar el correo de recuperación');
+                toast.error('Correo electrónico inválido', {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    style: {width: 'auto', maxWidth: '800px', whiteSpace: 'nowrap', textAlign: 'center', fontSize: '18px'}
+                });
             }
         } catch (error) {
             console.error('Error de red', error);
@@ -27,21 +48,32 @@ function ForgotPassword() {
     };
 
     return (
-        <div>
-            <h1>Recupera tu contraseña</h1>
-            <h2>Introduce tu correo electrónico y te enviaremos las instrucciones para restablecer tu contraseña.</h2>
-            <form onSubmit={handleSubmit}>
-                <input
-                    type="email"
-                    placeholder="Email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                />
-                <button type="submit">Enviar</button>
-                <button onClick={() => navigate('/login')} className="volver">Volver</button>
-            </form>
-        </div>
+        <>
+            <ToastContainer /> {/* Aquí se incluye ToastContainer */}
+            <div className="container">
+                <div className="logo-container">
+                    <img src={logo} alt="Logo" className="logo"/>
+                </div>
+                <hr/>
+                <h2>Recupera tu contraseña</h2>
+                <hr className="first-line"/>
+                <p className="text">Introduce tu correo electrónico y te enviaremos las instrucciones para restablecer
+                    tu contraseña.</p>
+                <form onSubmit={handleSubmit}>
+                    <div className="input-container">
+                        <input
+                            type="email"
+                            placeholder="Correo Electrónico"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <button className="register-button" type="submit">Enviar</button>
+                </form>
+                <button className="return-button" onClick={() => navigate('/login')}>Volver</button>
+            </div>
+        </>
     );
 }
 

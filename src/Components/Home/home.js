@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import {useLocation, useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import './home.css';
 import logo from '../../futmatchLogo.png';
-import { GrTrophy } from 'react-icons/gr';
-import {jwtDecode} from "jwt-decode"; // Importa el ícono de trofeo
+import {jwtDecode} from "jwt-decode";
+import {GoChevronDown} from "react-icons/go";
+import {FaTrophy} from "react-icons/fa";
 
 async function getTeams() {
     const token = localStorage.getItem('token');
@@ -42,22 +43,36 @@ function HomePage() {
         getTeams().then(setTeams);
     }, []);
 
-    const handleMenuToggle = () => {
-        setMenuOpen(!menuOpen);
+    const handleMenuOpen = () => {
+        setMenuOpen(true);
     };
+
+    const handleMenuClose = () => {
+        setMenuOpen(false);
+    }
 
     const handleLogout = () => {
         localStorage.removeItem('token');
         navigate('/login');
     };
 
+    const filteredTeams = teams.filter((team) => {
+        return (
+            (cityFilter ? team.city === cityFilter : true) &&
+            (playerFilter ? team.playerAmount === playerFilter : true) &&
+            (fairplayFilter ? team.stars === fairplayFilter : true) &&
+            (search ? team.name.toLowerCase().includes(search.toLowerCase()) : true)
+        );
+    });
+
     return (
         <div className="home-container">
-            <header className="home-header">
-                <img src={logo} alt="Logo" className="logo" />
-                <button className="menu-button" onClick={handleMenuToggle}>☰</button>
-            </header>
+            <img src={logo} alt="Logo" className="logo-home"/>
+            {!menuOpen && (
+                <button className="menu-button-open" onClick={handleMenuOpen}>☰</button>
+            )}
             <div className={`menu-dropdown ${menuOpen ? 'open' : ''}`}>
+                <button className="menu-button-close" onClick={handleMenuClose}>☰</button>
                 <button onClick={() => navigate('/profile')}>Mi Perfil</button>
                 <button onClick={() => navigate('/notifications')}>Notificaciones</button>
                 <button onClick={() => navigate('/ranking')}>Ranking</button>
@@ -71,10 +86,11 @@ function HomePage() {
                     placeholder="Buscar equipo"
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
+                    className="bar"
                 />
                 <button onClick={togglePopup}>Filtrar</button>
                 {showPopup && (
-                    <div className="popup">
+                    <div className="filters">
                         <div className="input-container">
                             <select
                                 className="dropdown"
@@ -127,6 +143,7 @@ function HomePage() {
                                 <option value="Vicente López">Vicente López</option>
                                 <option value="Zárate">Zárate</option>
                             </select>
+                            <GoChevronDown className={"dropdown-icon"}/>
                         </div>
                         <div className="input-container">
                             <select
@@ -140,6 +157,7 @@ function HomePage() {
                                 <option value="8">8</option>
                                 <option value="11">11</option>
                             </select>
+                            <GoChevronDown className={"dropdown-icon"}/>
                         </div>
                         <div className="input-container">
                             <select
@@ -154,30 +172,26 @@ function HomePage() {
                                 <option value="4">4 star</option>
                                 <option value="5">5 star</option>
                             </select>
+                            <GoChevronDown className={"dropdown-icon"}/>
                         </div>
                     </div>
                 )}
-                {teams
-                    .filter((team) => {
-                        return (
-                            (cityFilter ? team.city === cityFilter : true) &&
-                            (playerFilter ? team.playerAmount === playerFilter : true) &&
-                            (fairplayFilter ? team.stars === fairplayFilter : true) &&
-                            (search ? team.name.toLowerCase().includes(search.toLowerCase()) : true)
-                        );
-                    })
-                    .map((team) => (
-                    <div key={team.id} className="team-card" onClick={() => navigate(`/profile/${team.id}`)}>
-                        <div className="team-info">
-                            <h2>{team.name}</h2>
-                            <p className="team-city">{team.city}</p>
+                {filteredTeams.length === 0 ? (
+                    <p>No se encontraron equipos.</p>
+                ) : (
+                    filteredTeams.map((team) => (
+                        <div key={team.id} className="team-card" onClick={() => navigate(`/profile/${team.id}`)}>
+                            <div className="team-info">
+                                <h2>{team.name}</h2>
+                                <p className="team-city">{team.city}</p>
+                            </div>
+                            <div className="team-elo">
+                                <FaTrophy className="trophy-icon"/>
+                                <p>{team.elo}</p>
+                            </div>
                         </div>
-                        <div className="team-elo-container">
-                            <GrTrophy className="trophy-icon" />
-                            <p className="team-elo">{team.elo}</p>
-                        </div>
-                    </div>
-                ))}
+                    ))
+                )}
             </div>
         </div>
     );

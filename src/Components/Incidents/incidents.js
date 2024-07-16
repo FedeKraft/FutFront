@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import './../Home/home.css';
+import {useLocation, useNavigate, useParams} from 'react-router-dom';
+import './../Profile/profile.css';
+import {MdOutlineKeyboardBackspace} from "react-icons/md";
 
 
 function Incidents() {
+    const navigate = useNavigate();
+    const location = useLocation();
     const {id} = useParams();
     const [forms, setForms] = useState([]);
 
@@ -24,21 +27,35 @@ function Incidents() {
         }
     };
 
+    const handleBack = () => {
+        // Evita volver si ya estás en la página de inicio
+        if (location.pathname !== '/home') {
+            navigate(-1);
+        }
+    }
+
     useEffect(() => {
         fetchForm();
     }, [id]);
 
     return (
-        <div>
-            <h1>Incidentes</h1>
-            {forms.map((form, index) => (
-                form.comment !== '' ? (
-                    <div key={index}>
-                        <h3>{form.user.name}</h3>
-                        <p>{form.comment}</p>
-                    </div>
-                ) : null
-            ))}
+        <div className="home-container">
+            <button className="back-button" onClick={handleBack}>
+                <MdOutlineKeyboardBackspace size={30}/>
+            </button>
+            <h1 className="title">Incidentes</h1>
+            {forms.length === 0 || forms.every(form => form.comment === '' || form.comment === null) ? (
+                <p className="no-incidents">No hay incidentes.</p>
+            ) : (
+                forms.map((form) => (
+                    form.comment !== '' ? (
+                        <div className="incidents">
+                            <h3>{form.user.name}</h3>
+                            <p>{form.comment}</p>
+                        </div>
+                    ) : null
+                ))
+            )}
         </div>
     );
 }

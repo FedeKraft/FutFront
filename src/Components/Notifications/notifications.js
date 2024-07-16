@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {useLocation, useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import {MdOutlineKeyboardBackspace} from "react-icons/md";
 import './notifications.css';
+import {toast, ToastContainer} from "react-toastify";
+
 function Notifications() {
     const navigate = useNavigate();
     const [notifications, setNotifications] = useState([]);
-    const location = useLocation();
 
     async function getNotifications() {
         const token = localStorage.getItem('token');
@@ -70,9 +71,17 @@ function Notifications() {
 
     async function matchCanceled(notification) {
         const token = localStorage.getItem('token');
-        const userConfirmation = window.confirm('¿Estás seguro de que quieres reportar el match como cancelado?');
-        if (userConfirmation) {
-            const response = await fetch(`http://localhost:8080/api/notifications/responded`, {
+        toast.info("Partido cancelado", {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            style: {width: 'auto', maxWidth: '800px', whiteSpace: 'nowrap', textAlign: 'center', fontSize: '18px'}
+        });
+        const response = await fetch(`http://localhost:8080/api/notifications/responded`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -81,18 +90,16 @@ function Notifications() {
                 body: JSON.stringify({
                     notificationId: notification.id
                 })
+        });
+        if (response.ok) {
+            // Vuelve a obtener las notificaciones
+            getNotifications().then(notifications => {
+                setNotifications(notifications);
             });
-            if (response.ok) {
-                // Vuelve a obtener las notificaciones
-                getNotifications().then(notifications => {
-                    setNotifications(notifications);
-                });
-            } else {
-                console.error('Error al cancelar el partido');
-            }
+        } else {
+            console.error('Error al cancelar el partido');
         }
     }
-
 
     useEffect(() => {
         getNotifications().then(notifications => {
@@ -102,49 +109,50 @@ function Notifications() {
 
     return (
         <div>
-            <div className="container">
-            <h1>Notificaciones</h1>
-            {[...notifications].reverse().map(notification => {
-                if (notification.responded === false) {
-                    if (notification.match.status !== 'PENDING' && notification.message.includes('iniciado')) {
-                        return null;
-                    }
-                    if (notification.match.status !== 'PENDING' && notification.message.includes('Informar')) {
-                        return (
+            <div className="home-container">
+                <ToastContainer/>
+                <button className="back-button" onClick={() => navigate('/home')}>
+                    <MdOutlineKeyboardBackspace size={30}/>
+                </button>
+                <h1 className="title">Notificaciones</h1>
+                {[...notifications].sort((a, b) => b.id - a.id).map(notification => {
+                    if (notification.responded === false) {
+                        if (notification.match.status !== 'PENDING' && notification.message.includes('iniciado')) {
+                            return null;
+                        }
+                        if (notification.match.status !== 'PENDING' && notification.message.includes('Informar')) {
+                            return (
+                                <div key={notification.id} className="notification-card">
+                                    <p>{notification.message}</p>
+                                    <button onClick={async () => {
+                                        navigate('/form', {state: {notification}});
+                                    }}>Informar resultado
+                                    </button>
+                                    <button onClick={() => matchCanceled(notification)}>Partido
+                                        cancelado
+                                    </button>
+                                </div>
+                            )
+                        } else return (
                             <div key={notification.id} className="notification-card">
-                                <p>{notification.message}</p>
-                                <button onClick={async () => {
-                                    navigate('/form', {state: {notification}});
-                                }}>Informar resultado
-                                </button>
-                                <button onClick={() => matchCanceled(notification)}>Partido
-                                    cancelado
-                                </button>
+                                {notification.match.status === 'PENDING' ? (
+                                    <>
+                                        <p>{notification.message}</p>
+                                        <button
+                                            onClick={() => acceptNotification(notification)}>Aceptar
+                                        </button>
+                                        <button
+                                            onClick={() => rejectNotification(notification)}>Rechazar
+                                        </button>
+                                    </>
+                                ) : (
+                                    <p>{notification.message}</p>
+                                )}
                             </div>
                         )
-                    } else return (
-                        <div key={notification.id} className="notification-card">
-                            {notification.match.status === 'PENDING' ? (
-                                <>
-                                    <p>{notification.message}</p>
-                                    <button
-                                        onClick={() => acceptNotification(notification)}>Aceptar
-                                    </button>
-                                    <button
-                                        onClick={() => rejectNotification(notification)}>Rechazar
-                                    </button>
-                                </>
-                            ) : (
-                                <p>{notification.message}</p>
-                            )}
-                        </div>
-                    )
-                }
-            })}
-            <button onClick={() => navigate('/home')}>
-                <MdOutlineKeyboardBackspace size={24}/>
-            </button>
-        </div>
+                    }
+                })}
+            </div>
         </div>
     )
 }

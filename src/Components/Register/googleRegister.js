@@ -6,10 +6,10 @@ import { GoChevronDown } from "react-icons/go";
 import {toast} from "react-toastify";
 
 
-function Register() {
+function GoogleRegister() {
+    const email = localStorage.getItem('email');
+    const password = localStorage.getItem('password');
     const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
     const [city, setCity] = useState('');
     const [playerAmount, setPlayerAmount] = useState('');
     const [number, setNumber] = useState('');
@@ -23,7 +23,7 @@ function Register() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ name, email, password, city, playerAmount, number}),
+                body: JSON.stringify({ email, password, name, city, playerAmount, number}),
             });
             if (response.ok) {
                 console.log('Usuario registrado con éxito');
@@ -38,11 +38,10 @@ function Register() {
                     style: { width: 'auto', maxWidth: '600px', whiteSpace: 'nowrap', textAlign: 'center', fontSize: '18px' }
                 });
                 setName('');
-                setEmail('');
-                setPassword('');
                 setCity('');
                 setPlayerAmount('');
                 setNumber('');
+                localStorage.clear();
                 navigate('/login');
             } else {
                 console.error('Error al registrarse');
@@ -74,24 +73,6 @@ function Register() {
                         placeholder="Nombre de Equipo"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
-                        required
-                    />
-                </div>
-                <div className="input-container">
-                    <input
-                        type="email"
-                        placeholder="Correo electrónico"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
-                    />
-                </div>
-                <div className="input-container">
-                    <input
-                        type="password"
-                        placeholder="Contraseña"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
                         required
                     />
                 </div>
@@ -176,9 +157,13 @@ function Register() {
                 </div>
                 <button className="register-button" type="submit">Registrarse</button>
             </form>
-            <button className="return-button" onClick={() => navigate('/login')}>Volver</button>
+            <button className="return-button" onClick={() => {
+                localStorage.clear();
+                navigate('/login');
+            }}>Volver
+            </button>
         </div>
     );
 }
 
-export default Register;
+export default GoogleRegister;

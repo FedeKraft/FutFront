@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import './../Home/home.css';
+import './../Profile/profile.css';
+import {GoChevronDown} from "react-icons/go";
 
 function Form() {
     const [goalsInFavor, setGoalsInFavor] = useState('');
@@ -63,35 +64,43 @@ function Form() {
     };
 
     return (
-        <div>
-            <h1>Formulario</h1>
-            <h2>{currentUser.name} vs {opponentUser.name}</h2>
+        <div className="home-container">
+            <h1 className="title2">Formulario</h1>
+            <h3>{currentUser.name} vs {opponentUser.name}</h3>
             <form onSubmit={handleSubmit}>
-                <label>
+                <label className="change">
                     Goles a favor:
-                    <input type="number" value={goalsInFavor} onChange={(e) => setGoalsInFavor(e.target.value)} required />
+                    <input type="number" value={goalsInFavor} onChange={(e) => setGoalsInFavor(e.target.value)}
+                           required/>
                 </label>
-                <label>
+                <label className="change">
                     Goles en contra:
-                    <input type="number" value={goalsAgainst} onChange={(e) => setGoalsAgainst(e.target.value)} required />
+                    <input type="number" value={goalsAgainst} onChange={(e) => setGoalsAgainst(e.target.value)}
+                           required/>
                 </label>
-                <label>
-                    ¿Como fue tu experiencia con el equipo rival?
-                    <select value={fairPlay} onChange={(e) => setFairPlay(e.target.value)} required>
-                        <option value="">Selecciona una opción</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                    </select>
+                <label className="change">
+                    ¿Como fue tu experiencia con el rival?
+                    <div className="rating">
+                        <input type="radio" name="star" id="1star" onChange={() => setFairPlay("5")}/>
+                        <label htmlFor="1star"></label>
+                        <input type="radio" name="star" id="2star" onChange={() => setFairPlay("4")}/>
+                        <label htmlFor="2star"></label>
+                        <input type="radio" name="star" id="3star" onChange={() => setFairPlay("3")}/>
+                        <label htmlFor="3star"></label>
+                        <input type="radio" name="star" id="4star" onChange={() => setFairPlay("2")}/>
+                        <label htmlFor="4star"></label>
+                        <input type="radio" name="star" id="5star" onChange={() => setFairPlay("1")}/>
+                        <label htmlFor="5star"></label>
+                    </div>
                 </label>
-                <label>
+                <label className="change">
                     Queja acerca del rival (opcional):
-                    <textarea value={comment} onChange={(e) => setComment(e.target.value)}/>
+                    <input type="text" name="name" onChange={(e) => setComment(e.target.value)}/>
                 </label>
-                <button type="submit">Enviar</button>
-                <button type="button" onClick={handleCancel}>Cancelar</button>
+                <div className="profile-buttons">
+                    <button type="submit">Enviar</button>
+                    <button type="button" onClick={handleCancel}>Cancelar</button>
+                </div>
             </form>
         </div>
     );

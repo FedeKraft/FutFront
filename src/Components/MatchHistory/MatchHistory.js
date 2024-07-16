@@ -20,14 +20,25 @@ async function getHistory() {
         console.error('Error al obtener el historial de partidos');
         return [];
     }
-
 }
+
+function getOpponentId(match) {
+    const token = localStorage.getItem('token');
+    const currentUserId = jwtDecode(token).id;
+
+    if (match.fromUser.id === currentUserId) {
+        return match.toUser.id;
+    }
+    else {
+        return match.fromUser.id;
+    }
+}
+
 function History(){
     const navigate = useNavigate();
     const location = useLocation();
     const [history, setHistory] = useState([]);
-    const token = localStorage.getItem('token');
-    const currentUserId = jwtDecode(token).id;
+
     const handleBack = () => {
         // Evita volver si ya estás en la página de inicio
         if (location.pathname !== '/home') {
@@ -39,17 +50,22 @@ function History(){
         getHistory().then(setHistory);
     }, []);
     return (
-        <div className="container">
-            <button className="back-button2" onClick={handleBack}>
-                <MdOutlineKeyboardBackspace size={24}/>
+        <div className="home-container">
+            <button className="back-button" onClick={handleBack}>
+                <MdOutlineKeyboardBackspace size={30}/>
             </button>
             <h1 className="title">Historial de Partidos</h1>
-            {history.map((match) => (
-                <button key={match.id} className="match-container" onClick={() => navigate(`/profile/${match.toUser.id}`)}>
-                    {match.fromUser.name} ({match.fromUserForm.goalsInFavor}) -
-                    ({match.toUserForm.goalsInFavor}) {match.toUser.name}
-                </button>
-            ))}
+            {history.length === 0 ? (
+                <p className="no-incidents">No hay partidos jugados.</p>
+            ) : (
+                history.map((match) => (
+                    <button key={match.id} className="match-container" onClick={() => navigate(`/profile/${getOpponentId(match)}`)}>
+                        <span className="history-name">{match.fromUser.name}</span>
+                        <span className="result">({match.fromUserForm.goalsInFavor}) - ({match.toUserForm.goalsInFavor})</span>
+                        <span className="history-name2">{match.toUser.name}</span>
+                    </button>
+                )))
+            }
         </div>
     );
 }

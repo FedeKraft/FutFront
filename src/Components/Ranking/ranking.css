@@ -1,21 +1,45 @@
-.cont{
-    width: 100%;
-    max-width: 1200px;
-    max-height: 100vh;
-    background-color: #f5f5f5;
-    border-radius: 20px;
-    padding: 2rem;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-    overflow-y: auto;
-    margin: auto;
-    box-sizing: border-box;
+.rank-info {
+    display: flex;
+    flex-direction: column; /* Cambiar la dirección del eje principal a column */
+    justify-content: space-between;
+    width: 85%;
+    height: 40px;
+    background: green;
 }
 
-.cabeza{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    text-align: center;
-    margin-bottom: 1rem;
+.team-index {
+    position: absolute;
+    left: 5%;
+    font-size: 2rem;
+    margin: 0;
+    color: #000000;
+}
 
+.ranking-title {
+    margin-top: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    height: 8rem;
+}
+
+@media (max-height: 800px) {
+    .ranking-title {
+        margin-top: 1rem;
+    }
+}
+
+.header {
+    font-size: 4rem;
+}
+
+.trophy {
+    color: goldenrod;
+}
+
+@media (max-width: 350px) {
+    .trophy {
+        display: none;
+    }
 }
