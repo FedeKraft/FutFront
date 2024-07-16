@@ -159,6 +159,11 @@ body {
     width: 100%;
 }
 
+.input-container3 {
+    margin-top: 2rem;
+    width: 100%;
+}
+
 .match-container {
     position: relative;
     display: flex;

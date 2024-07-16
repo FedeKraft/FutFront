@@ -64,7 +64,9 @@ function Register() {
             <div className="logo-container">
                 <img src={logo} alt="Logo" className="logo"/>
             </div>
+            <hr/>
             <h2>Registro de usuario</h2>
+            <hr className="first-line"/>
             <form onSubmit={handleSubmit}>
                 <div className="input-container">
                     <input

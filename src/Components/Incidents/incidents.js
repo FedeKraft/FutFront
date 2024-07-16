@@ -47,7 +47,7 @@ function Incidents() {
             {forms.length === 0 || forms.every(form => form.comment === '' || form.comment === null) ? (
                 <p className="no-incidents">No hay incidentes.</p>
             ) : (
-                forms.map((form, index) => (
+                forms.map((form) => (
                     form.comment !== '' ? (
                         <div className="incidents">
                             <h3>{form.user.name}</h3>

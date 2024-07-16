@@ -55,13 +55,17 @@ function History(){
                 <MdOutlineKeyboardBackspace size={30}/>
             </button>
             <h1 className="title">Historial de Partidos</h1>
-            {history.map((match) => (
-                <button key={match.id} className="match-container" onClick={() => navigate(`/profile/${getOpponentId(match)}`)}>
-                    <span className="history-name">{match.fromUser.name}</span>
-                    <span className="result">({match.fromUserForm.goalsInFavor}) - ({match.toUserForm.goalsInFavor})</span>
-                    <span className="history-name2">{match.toUser.name}</span>
-                </button>
-            ))}
+            {history.length === 0 ? (
+                <p className="no-incidents">No hay partidos jugados.</p>
+            ) : (
+                history.map((match) => (
+                    <button key={match.id} className="match-container" onClick={() => navigate(`/profile/${getOpponentId(match)}`)}>
+                        <span className="history-name">{match.fromUser.name}</span>
+                        <span className="result">({match.fromUserForm.goalsInFavor}) - ({match.toUserForm.goalsInFavor})</span>
+                        <span className="history-name2">{match.toUser.name}</span>
+                    </button>
+                )))
+            }
         </div>
     );
 }

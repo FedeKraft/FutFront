@@ -171,4 +171,49 @@ body {
     gap: 10px;
 }
 
+.report {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.incidents span {
+    font-weight: bold;
+    margin-top: 0;
+    color: rgba(0, 0, 0, 0.85);
+    font-size: 1rem;
+}
+
+.report-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 0;
+    width: 100%;
+}
+
+.report-button button {
+    width: auto;
+    margin-bottom: 10px;
+}
+
+.no-reports {
+    margin-top: 50px;
+    font-size: 1.3rem;
+    width: 100%;
+}
+
+.link {
+    color: #007bff;
+    text-decoration: none;
+    font-size: 0.875rem;
+}
+
+.link:hover {
+    text-decoration: underline;
+}
 

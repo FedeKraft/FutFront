@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
 import './login.css';
 import logo from '../../futmatchLogo.png';
 import { toast, ToastContainer } from 'react-toastify';
@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Link } from 'react-router-dom';
 import { useGoogleLogin } from '@react-oauth/google';
 import axios from "axios";
+import {jwtDecode} from "jwt-decode";
 
 
 function Login() {
@@ -33,8 +34,27 @@ function Login() {
                 localStorage.setItem('token', res.token);
                 setEmail('');
                 setPassword('');
-                navigate('/home', { replace: true });
-            } else {
+                if (jwtDecode(res.token).role === 'ADMIN') {
+                    navigate('/adminHome', { replace: true });
+                } else {
+                    navigate('/home', { replace: true });
+                }
+            }
+            if (response.status === 401) {
+                toast.error('Equipo suspendido', {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    style: {width: 'auto', maxWidth: '800px', whiteSpace: 'nowrap', textAlign: 'center', fontSize: '18px'}
+                });
+                setEmail('');
+                setPassword('');
+            }
+            else {
                 toast.error('Credenciales invalidas', {
                     position: "top-center",
                     autoClose: 5000,
@@ -70,16 +90,25 @@ function Login() {
                 const data = await res.json();
                 if (data.userExists) {
                     localStorage.setItem('token', data.token.token);
-                    console.log(localStorage.getItem('token'));
                     setEmail('');
                     setPassword('');
-                    navigate('/home', { replace: true });
-                } else {
+                    navigate('/home');
+                }
+                else {
                     localStorage.setItem('email', googleEmail);
                     localStorage.setItem('password', googlePassword);
                     navigate('/googleRegister');                }
             } else {
-                console.error('Error during Google login');
+                toast.error('Equipo suspendido', {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    style: {width: 'auto', maxWidth: '800px', whiteSpace: 'nowrap', textAlign: 'center', fontSize: '18px'}
+                });
             }
         } catch (error) {
             console.error('Network error', error);
@@ -158,7 +187,7 @@ function Login() {
                     <button onClick={() => navigate('/register')}>Registrarse</button>
                 </form>
                 <div className="forgot-password">
-                    <Link to="/forgotPassword">¿Olvidaste tu contraseña?</Link>
+                    <Link to='/forgotPassword'>¿Olvidaste tu contraseña?</Link>
                 </div>
                 <div className="line-with-text">
                     <hr/>
